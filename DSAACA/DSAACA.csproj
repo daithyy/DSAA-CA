@@ -47,6 +47,7 @@
     <Compile Include="Components\ContentLoader.cs" />
     <Compile Include="Components\Helpers.cs" />
     <Compile Include="Components\InputEngine.cs" />
+    <Compile Include="Entities\Player.cs" />
     <Compile Include="Entities\Sprite.cs" />
     <Compile Include="GameRoot.cs" />
     <Compile Include="Program.cs" />
