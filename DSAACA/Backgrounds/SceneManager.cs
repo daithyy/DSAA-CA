@@ -11,7 +11,7 @@ namespace DSAACA.Backgrounds
     class SceneManager : GameComponent
     {
         #region Properties
-
+        public List<Scene> Scenes;
         #endregion
 
         #region Constructor

@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Backgrounds\SceneManager.cs" />
     <Compile Include="Components\AudioManager.cs" />
+    <Compile Include="Components\Camera.cs" />
     <Compile Include="Components\ContentLoader.cs" />
     <Compile Include="Components\Helpers.cs" />
     <Compile Include="Components\InputEngine.cs" />
