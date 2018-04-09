@@ -41,9 +41,15 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Backgrounds\SceneManager.cs" />
+    <Compile Include="Components\AudioManager.cs" />
+    <Compile Include="Components\ContentLoader.cs" />
+    <Compile Include="Components\Helpers.cs" />
+    <Compile Include="Components\InputEngine.cs" />
     <Compile Include="GameRoot.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Backgrounds\Scene.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

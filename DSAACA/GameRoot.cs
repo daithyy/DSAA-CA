@@ -2,6 +2,10 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+using DSAACA.Backgrounds;
+using DSAACA.Components;
+using InputManager;
+
 namespace DSAACA
 {
     public class GameRoot : Game
@@ -17,7 +21,8 @@ namespace DSAACA
 
         protected override void Initialize()
         {
-
+            new InputEngine(this);
+            Helper.GraphicsDevice = this.GraphicsDevice;
             base.Initialize();
         }
 
@@ -49,5 +54,9 @@ namespace DSAACA
 
             base.Draw(gameTime);
         }
+
+        #region Methods
+
+        #endregion
     }
 }
