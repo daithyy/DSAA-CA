@@ -27,7 +27,7 @@ namespace DSAACA.Backgrounds.Levels
             ui = new MenuUI(GameRoot.TextureResource["ui_arrow"], 
                 new Vector2(0,0), CreateMenuItems());
 
-            Active = true;
+            Init();
         }
 
         #endregion
@@ -49,6 +49,7 @@ namespace DSAACA.Backgrounds.Levels
 
         private void Init()
         {
+            Active = true;
             MediaPlayer.Play(BackingTrack);
         }
 
