@@ -14,14 +14,14 @@ namespace DSAACA.UI
 {
     class MenuUI
     {
-        public Sprite Pointer { get; set; }
+        public Texture2D Pointer { get; set; }
         private Vector2 StartPosition { get; set; }
         public Vector2 Position { get; set; }
         public bool isVisible = true;
         private List<MenuItem> Slots;
         public int SlotPosition = 0;
 
-        public MenuUI(Sprite textureIn, Vector2 positionIn, List<MenuItem> slotsIn)
+        public MenuUI(Texture2D textureIn, Vector2 positionIn, List<MenuItem> slotsIn)
         {
             Pointer = textureIn;
             Position = positionIn;
@@ -63,7 +63,7 @@ namespace DSAACA.UI
         {
             if (isVisible)
             {
-                spriteBatch.Draw(Pointer.Image, Pointer.Bounds, Color.White);
+                spriteBatch.Draw(Pointer, Pointer.Bounds, Color.White);
             }
         }
 

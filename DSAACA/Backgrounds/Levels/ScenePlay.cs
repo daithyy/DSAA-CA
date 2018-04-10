@@ -20,7 +20,7 @@ namespace DSAACA.Backgrounds.Levels
         #endregion
 
         #region Constructor
-        public ScenePlay(Sprite texture, Song bgm, Keys key)
+        public ScenePlay(Texture2D texture, Song bgm, Keys key)
             : base(texture, bgm, key)
         {
 
@@ -33,7 +33,7 @@ namespace DSAACA.Backgrounds.Levels
 
         }
 
-        public override void Draw(Game game)
+        public override void Draw(SpriteBatch spriteBatch)
         {
 
         }

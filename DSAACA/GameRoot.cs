@@ -22,7 +22,7 @@ namespace DSAACA
         private int _height = 720;
 
         public static Dictionary<string, SpriteFont> FontResource;
-        public static Dictionary<string, Sprite> TextureResource;
+        public static Dictionary<string, Texture2D> TextureResource;
         public static Dictionary<string, SoundEffect> AudioResource;
         public static Dictionary<string, Song> MusicResource;
 
@@ -48,6 +48,12 @@ namespace DSAACA
 
         protected override void Initialize()
         {
+            Window.Position = new Point(
+                (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 2) -
+                (graphics.PreferredBackBufferWidth / 2),
+                (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 2) -
+                (graphics.PreferredBackBufferHeight / 2));
+
             new InputEngine(this);
             //Helper.GameRoot = this;
             Helper.GraphicsDevice = this.GraphicsDevice;
@@ -64,7 +70,7 @@ namespace DSAACA
 
             FontResource = Loader.ContentLoad<SpriteFont>(Content, "Assets\\Fonts");
             TextureResource = Loader.ContentLoad<Texture2D>(Content, "Assets\\Sprites");
-            AudioResource = Loader.ContentLoad<Song>(Content, "Assets\\Music");
+            MusicResource = Loader.ContentLoad<Song>(Content, "Assets\\Music");
         }
 
         protected override void UnloadContent()

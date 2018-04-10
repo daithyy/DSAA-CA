@@ -21,18 +21,13 @@ namespace DSAACA.Backgrounds.Levels
         #endregion
 
         #region Constructor
-        public SceneMenu(Sprite texture, Song bgm, Keys key)
+        public SceneMenu(Texture2D texture, Song bgm, Keys key)
             : base(texture, bgm, key)
         {
             ui = new MenuUI(GameRoot.TextureResource["ui_arrow"], 
                 new Vector2(0,0), CreateMenuItems());
 
             Active = true;
-            
-            Texture.Bounds = new Rectangle(
-                new Point(0, 0),
-                new Point(Helper.GraphicsDevice.Viewport.Width,
-                Helper.GraphicsDevice.Viewport.Height));
         }
 
         #endregion
@@ -43,11 +38,13 @@ namespace DSAACA.Backgrounds.Levels
 
         }
 
-        public override void Draw(Game game)
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            SpriteBatch spriteBatch = (SpriteBatch)game.Services.GetService(typeof(SpriteBatch));
-
-            Texture.Draw(spriteBatch);
+            spriteBatch.Draw(Texture, new Rectangle(
+                new Point((int)Position.X, (int)Position.Y), 
+                new Point(
+                    Helper.GraphicsDevice.Viewport.Bounds.Width,
+                    Helper.GraphicsDevice.Viewport.Bounds.Height)), Color.White);
         }
 
         private void Init()

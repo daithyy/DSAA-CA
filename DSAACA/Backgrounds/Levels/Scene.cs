@@ -17,9 +17,9 @@ namespace DSAACA.Backgrounds
     public abstract class Scene
     {
         #region Properties
-        private Sprite _tx;
+        private Texture2D _tx;
         public bool Active { get; set; }
-        public Sprite Texture
+        public Texture2D Texture
         {
             get
             {
@@ -31,12 +31,12 @@ namespace DSAACA.Backgrounds
             }
         }
         public Song BackingTrack { get; set; }
-        public SoundEffectInstance SoundPlayer { get; set; }
+        public Vector2 Position { get; set; }
         public Keys ActivationKey;
         #endregion
 
         #region Constructor
-        public Scene(Sprite tx, Song bgm, Keys key)
+        public Scene(Texture2D tx, Song bgm, Keys key)
         {
             _tx = tx;
             BackingTrack = bgm;
@@ -48,7 +48,7 @@ namespace DSAACA.Backgrounds
         #region Methods
         public abstract void Update();
 
-        public abstract void Draw(Game game);
+        public abstract void Draw(SpriteBatch spriteBatch);
         #endregion
     }
 }

@@ -16,7 +16,7 @@ namespace DSAACA.UI
         #region Properties
         public static int Count = 0;
         private SpriteFont UIFont { get; set; }
-        public Sprite Texture { get; set; }
+        public Texture2D Texture { get; set; }
         public Color CurrentColor { get; set; }
         public Vector2 Position { get; set; }
         private Rectangle BoundingRectangle
@@ -29,7 +29,7 @@ namespace DSAACA.UI
         #endregion
 
         #region Constructor
-        public MenuItem(string nameIn, Sprite textureIn, SpriteFont UIFontIn, Color colorIn, Vector2 positionIn)
+        public MenuItem(string nameIn, Texture2D textureIn, SpriteFont UIFontIn, Color colorIn, Vector2 positionIn)
         {
             Count++;
             Name = nameIn;
@@ -53,7 +53,7 @@ namespace DSAACA.UI
         {
             if (isVisible)
             {
-                spriteBatch.Draw(Texture.Image, Texture.Bounds, CurrentColor);
+                spriteBatch.Draw(Texture, Texture.Bounds, CurrentColor);
                 spriteBatch.DrawString(UIFont, Name, 
                     new Vector2(this.Position.X + Texture.Bounds.Width / 5, 
                     this.Position.Y - Texture.Bounds.Height), Color.White);

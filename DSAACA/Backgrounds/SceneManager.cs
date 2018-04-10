@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using DSAACA.Backgrounds.Levels;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace DSAACA.Backgrounds
 {
@@ -41,10 +42,14 @@ namespace DSAACA.Backgrounds
 
         public override void Draw(GameTime gameTime)
         {
+            SpriteBatch spriteBatch = (SpriteBatch)gameRoot.Services.GetService(typeof(SpriteBatch));
+
+            spriteBatch.Begin();
             foreach (Scene scene in Scenes)
             {
-                scene.Draw(gameRoot);
+                scene.Draw(spriteBatch);
             }
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
