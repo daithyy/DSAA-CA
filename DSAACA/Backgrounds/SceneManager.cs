@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using DSAACA.Backgrounds.Levels;
 using Microsoft.Xna.Framework.Graphics;
+using DSAACA.Components;
 
 namespace DSAACA.Backgrounds
 {
@@ -24,6 +25,7 @@ namespace DSAACA.Backgrounds
         {
             game.Components.Add(this);
             gameRoot = game;
+            Scenes = new Stack<Scene>();
             CreateScenes();
             Scenes.Push(mainMenu);
         }
@@ -44,11 +46,16 @@ namespace DSAACA.Backgrounds
         {
             SpriteBatch spriteBatch = (SpriteBatch)gameRoot.Services.GetService(typeof(SpriteBatch));
 
-            spriteBatch.Begin();
+            spriteBatch.Begin(
+                SpriteSortMode.Immediate, 
+                BlendState.AlphaBlend, 
+                SamplerState.PointClamp, null, null, null, Camera.CurrentCameraTranslation);
+
             foreach (Scene scene in Scenes)
             {
                 scene.Draw(spriteBatch);
             }
+
             spriteBatch.End();
 
             base.Draw(gameTime);
@@ -57,8 +64,8 @@ namespace DSAACA.Backgrounds
         private void CreateScenes()
         {
             mainMenu = new SceneMenu(
-                GameRoot.TextureResource["Backgrounds\\menu_main"],
-                GameRoot.MusicResource["Backgrounds\\menu_main"],
+                GameRoot.TextureResource["mainMenu"],
+                GameRoot.MusicResource["bgm"],
                 Keys.Enter);
         }
         #endregion

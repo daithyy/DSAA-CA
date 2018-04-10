@@ -57,13 +57,13 @@ namespace DSAACA.Backgrounds.Levels
             return new List<MenuItem>
             {
                 new MenuItem("Play",
-                    GameRoot.TextureResource["ui_play"],
+                    GameRoot.TextureResource["ui_arrow"],
                     GameRoot.FontResource["systemFont"], Color.White, new Vector2(0, 0)),
                 new MenuItem("High Scores",
-                    GameRoot.TextureResource["ui_highScore"],
+                    GameRoot.TextureResource["ui_arrow"],
                     GameRoot.FontResource["systemFont"], Color.White, new Vector2(0, 0)),
                 new MenuItem("Quit",
-                    GameRoot.TextureResource["ui_quit"],
+                    GameRoot.TextureResource["ui_arrow"],
                     GameRoot.FontResource["systemFont"], Color.White, new Vector2(0, 0))
             };
         }

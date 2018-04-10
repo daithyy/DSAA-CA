@@ -26,7 +26,8 @@ namespace DSAACA
         public static Dictionary<string, SoundEffect> AudioResource;
         public static Dictionary<string, Song> MusicResource;
 
-        SceneManager sceneManager;
+        private SceneManager sceneManager;
+        private Camera currentCamera;
 
         public GameRoot()
         {
@@ -58,8 +59,6 @@ namespace DSAACA
             //Helper.GameRoot = this;
             Helper.GraphicsDevice = this.GraphicsDevice;
 
-            sceneManager = new SceneManager(this);
-
             base.Initialize();
         }
 
@@ -71,6 +70,8 @@ namespace DSAACA
             FontResource = Loader.ContentLoad<SpriteFont>(Content, "Assets\\Fonts");
             TextureResource = Loader.ContentLoad<Texture2D>(Content, "Assets\\Sprites");
             MusicResource = Loader.ContentLoad<Song>(Content, "Assets\\Music");
+
+            sceneManager = new SceneManager(this);
         }
 
         protected override void UnloadContent()

@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
-namespace CameraNS
+namespace DSAACA.Components
 {
     /*                     Camera Shake Reference
      * http://xnaessentials.com/post/2011/04/27/shake-that-camera.aspx */

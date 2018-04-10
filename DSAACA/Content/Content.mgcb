@@ -110,7 +110,7 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Sprites/mainMenu.gif
 
-#begin Assets/Sprites/mainMenu2.gif
+#begin Assets/Sprites/ui_arrow.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -120,5 +120,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Assets/Sprites/mainMenu2.gif
+/build:Assets/Sprites/ui_arrow.png
 
