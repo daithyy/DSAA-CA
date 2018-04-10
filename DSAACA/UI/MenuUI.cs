@@ -8,43 +8,40 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using InputManager;
+using DSAACA.Entities;
 
-namespace DataStructureGame
+namespace DSAACA.UI
 {
-    class GUI
+    class MenuUI
     {
-        public Texture2D Pointer { get; set; }
+        public Sprite Pointer { get; set; }
         private Vector2 StartPosition { get; set; }
         public Vector2 Position { get; set; }
         public bool isVisible = true;
-        private Rectangle Bounds
-        {
-            get { return new Rectangle((int)Position.X, (int)Position.Y, Pointer.Width, Pointer.Height); }
-        }
-        private ColorObject[] colorObjects;
+        private List<MenuItem> Slots;
         public int SlotPosition = 0;
 
-        public GUI(Texture2D textureIn, Vector2 positionIn, ColorObject[] colorObjectsIn)
+        public MenuUI(Sprite textureIn, Vector2 positionIn, List<MenuItem> slotsIn)
         {
             Pointer = textureIn;
             Position = positionIn;
             StartPosition = positionIn;
-            colorObjects = colorObjectsIn;
+            Slots = slotsIn;
         }
 
         public virtual void Update(GameTime gameTime)
         {
             this.Position = new Vector2(
-                colorObjects[SlotPosition].Position.X
-                + (colorObjects[SlotPosition].Texture.Width / 4),
-                colorObjects[SlotPosition].Position.Y 
-                + (colorObjects[SlotPosition].Texture.Height 
-                + (colorObjects[SlotPosition].Texture.Height / 4)));
+                Slots[SlotPosition].Position.X
+                + (Slots[SlotPosition].Texture.Width / 4),
+                Slots[SlotPosition].Position.Y 
+                + (Slots[SlotPosition].Texture.Height 
+                + (Slots[SlotPosition].Texture.Height / 4)));
 
-            if (InputEngine.IsKeyPressed(Keys.Right) && SlotPosition <= (ColorObject.Count - 1))
+            if (InputEngine.IsKeyPressed(Keys.Right) && SlotPosition <= (MenuItem.Count - 1))
             {
                 SlotPosition++;
-                if (SlotPosition == (ColorObject.Count))
+                if (SlotPosition == (MenuItem.Count))
                 {
                     this.Position = StartPosition;
                     SlotPosition = 0;
@@ -54,7 +51,7 @@ namespace DataStructureGame
             {
                 if (SlotPosition == 0)
                 {
-                    SlotPosition = ColorObject.Count;
+                    SlotPosition = MenuItem.Count;
                 }
                 SlotPosition--;
             }
@@ -66,7 +63,7 @@ namespace DataStructureGame
         {
             if (isVisible)
             {
-                spriteBatch.Draw(Pointer, Bounds, Color.White);
+                spriteBatch.Draw(Pointer.Image, Pointer.Bounds, Color.White);
             }
         }
 
@@ -74,7 +71,7 @@ namespace DataStructureGame
         {
             if (InputEngine.IsKeyPressed(Keys.Enter))
             {
-                colorObjects[SlotPosition].isClicked = true;
+                Slots[SlotPosition].isClicked = true;
             }
         }
     }

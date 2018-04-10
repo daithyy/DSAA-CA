@@ -91,3 +91,10 @@
 /processorParam:Quality=Best
 /build:Assets/Sounds/soundtrack.wav
 
+#begin Assets/systemFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Assets/systemFont.spritefont
+

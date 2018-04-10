@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace DSAACA.Entities
 {
-    class Sprite
+    public class Sprite
     {
         #region Properties
         // Initialize public variables ...
@@ -18,7 +18,6 @@ namespace DSAACA.Entities
         public Vector2 Position;
         public Rectangle Bounds;
         public Color Tint;
-        public SoundEffect HitSound;
 
         // Animated Sprite
         // Source Rectangle used to determine where inside the spritesheet we are drawing ...
@@ -31,7 +30,7 @@ namespace DSAACA.Entities
         #endregion
 
         #region Constructor
-        public Sprite(Texture2D image, Vector2 position, Color tint, int frameCount)
+        public Sprite(Texture2D image, Vector2 position, int frameCount)
         {
             // We set the number of frames of the sprite to the frame count for the spritesheet ...
             numberOfFrames = frameCount;
@@ -39,8 +38,7 @@ namespace DSAACA.Entities
             // Assigning passed in variables to our object's variables ...
             Image = image;
             Position = position;
-            Tint = tint;
-            //HitSound = hitSound;
+            Tint = Color.White;
 
             // Animated Sprite
             // Width is now total width / number of frames ...
@@ -74,7 +72,6 @@ namespace DSAACA.Entities
                 0,
                 Image.Width / numberOfFrames,
                 Image.Height);
-
         }
 
         // Draw Method (Caller has a spritebatch ready and has already called SpriteBatch.Begin())
@@ -99,16 +96,15 @@ namespace DSAACA.Entities
         }
 
         // Collision Method ()
-        public void CheckCollision(Sprite other)
+        public bool CheckCollision(Sprite other)
         {
             if (Bounds.Intersects(other.Bounds))
             {
-                HitSound.Play();
-                Tint = Color.Red;
+                return true;
             }
             else
             {
-                Tint = Color.White;
+                return false;
             }
         }
         #endregion

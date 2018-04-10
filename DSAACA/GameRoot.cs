@@ -1,9 +1,14 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 using DSAACA.Backgrounds;
 using DSAACA.Components;
+using DSAACA.Entities;
 using InputManager;
 
 namespace DSAACA
@@ -12,6 +17,11 @@ namespace DSAACA
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        public static Dictionary<string, SpriteFont> FontResource;
+        public static Dictionary<string, Sprite> TextureResource;
+        public static Dictionary<string, SoundEffect> AudioResource;
+        public static Dictionary<string, Song> MusicResource;
 
         public GameRoot()
         {

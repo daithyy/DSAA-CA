@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using DSAACA.Components;
+using DSAACA.Entities;
 
 namespace DSAACA.Backgrounds.Levels
 {
@@ -19,7 +20,7 @@ namespace DSAACA.Backgrounds.Levels
         #endregion
 
         #region Constructor
-        public ScenePlay(Vector2 position, Texture2D texture, Song bgm, Keys key)
+        public ScenePlay(Vector2 position, Sprite texture, Song bgm, Keys key)
             : base(position, texture, bgm, key)
         {
 
@@ -34,7 +35,7 @@ namespace DSAACA.Backgrounds.Levels
 
         public override void Draw(SpriteBatch sp)
         {
-            sp.Draw(Texture, new Rectangle(Position.ToPoint(), new Point(
+            sp.Draw(Texture.Image, new Rectangle(Position.ToPoint(), new Point(
             Helper.GraphicsDevice.Viewport.Bounds.Width,
             Helper.GraphicsDevice.Viewport.Bounds.Height)), Color.White);
         }

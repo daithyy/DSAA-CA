@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Input;
+using DSAACA.Entities;
 
 namespace DSAACA.Backgrounds.Levels
 {
@@ -18,7 +19,7 @@ namespace DSAACA.Backgrounds.Levels
         #endregion
 
         #region Constructor
-        public SceneHighScore(Vector2 position, Texture2D texture, Song bgm, Keys key)
+        public SceneHighScore(Vector2 position, Sprite texture, Song bgm, Keys key)
             : base(position, texture, bgm, key)
         {
 

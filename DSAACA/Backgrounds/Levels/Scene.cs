@@ -10,15 +10,16 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Input;
 using DSAACA.Components;
+using DSAACA.Entities;
 
 namespace DSAACA.Backgrounds
 {
     public abstract class Scene
     {
         #region Properties
-        private Texture2D _tx;
+        private Sprite _tx;
         public bool Active { get; set; }
-        public Texture2D Texture
+        public Sprite Texture
         {
             get
             {
@@ -31,14 +32,12 @@ namespace DSAACA.Backgrounds
         }
         public Song BackingTrack { get; set; }
         public SoundEffectInstance SoundPlayer { get; set; }
-        public Vector2 Position { get; set; }
         public Keys ActivationKey;
         #endregion
 
         #region Constructor
-        public Scene(Vector2 pos, Texture2D tx, Song bgm, Keys key)
+        public Scene(Sprite tx, Song bgm, Keys key)
         {
-            Position = pos;
             _tx = tx;
             BackingTrack = bgm;
             ActivationKey = key;
