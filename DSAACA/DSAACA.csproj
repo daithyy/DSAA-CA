@@ -41,6 +41,9 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Backgrounds\Levels\SceneHighScore.cs" />
+    <Compile Include="Backgrounds\Levels\SceneMenu.cs" />
+    <Compile Include="Backgrounds\Levels\ScenePlay.cs" />
     <Compile Include="Backgrounds\SceneManager.cs" />
     <Compile Include="Components\AudioManager.cs" />
     <Compile Include="Components\Camera.cs" />

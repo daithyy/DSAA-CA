@@ -13,18 +13,17 @@ using DSAACA.Components;
 
 namespace DSAACA.Backgrounds
 {
-    class Scene
+    public abstract class Scene
     {
         #region Properties
-        Texture2D _tx;
+        private Texture2D _tx;
         public bool Active { get; set; }
-        public Texture2D Tx
+        public Texture2D Texture
         {
             get
             {
                 return _tx;
             }
-
             set
             {
                 _tx = value;
@@ -37,43 +36,19 @@ namespace DSAACA.Backgrounds
         #endregion
 
         #region Constructor
-        public Scene(Vector2 pos, Texture2D tx, Song sound, Keys key)
+        public Scene(Vector2 pos, Texture2D tx, Song bgm, Keys key)
         {
-            _tx = tx;
-            BackingTrack = sound;
             Position = pos;
+            _tx = tx;
+            BackingTrack = bgm;
             ActivationKey = key;
         }
         #endregion
 
         #region Methods
-        public void Update()
-        {
-            if (Active)
-            {
-                if (MediaPlayer.State == MediaState.Stopped)
-                {
-                    MediaPlayer.Play(BackingTrack);
-                }
-            }
-            else
-            {
-                if (MediaPlayer.State == MediaState.Playing)
-                {
-                    MediaPlayer.Stop();
-                    // Could do resume and Pause if you want Media player state
-                }
-            }
-        }
-        public void Draw(SpriteBatch sp)
-        {
-            if (Active)
-            {
-                sp.Draw(_tx, new Rectangle(Position.ToPoint(), new Point(
-                    Helper.GraphicsDevice.Viewport.Bounds.Width,
-                    Helper.GraphicsDevice.Viewport.Bounds.Height)), Color.White);
-            }
-        }
+        public abstract void Update();
+
+        public abstract void Draw(SpriteBatch sp);
         #endregion
     }
 }
