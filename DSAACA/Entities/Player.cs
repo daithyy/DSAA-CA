@@ -15,8 +15,8 @@ namespace DSAACA.Entities
         #endregion
 
         #region Constructor
-        public Player(Texture2D image, Vector2 position, Color tint, int frameCount) 
-            : base(image, position, tint, frameCount)
+        public Player(Texture2D image, Vector2 position, int frameCount) 
+            : base(image, position, frameCount)
         {
 
         }

@@ -33,10 +33,10 @@ namespace DSAACA.UI
         {
             this.Position = new Vector2(
                 Slots[SlotPosition].Position.X
-                + (Slots[SlotPosition].Texture.Width / 4),
+                + (Slots[SlotPosition].Texture.Bounds.Width / 4),
                 Slots[SlotPosition].Position.Y 
-                + (Slots[SlotPosition].Texture.Height 
-                + (Slots[SlotPosition].Texture.Height / 4)));
+                + (Slots[SlotPosition].Texture.Bounds.Height 
+                + (Slots[SlotPosition].Texture.Bounds.Height / 4)));
 
             if (InputEngine.IsKeyPressed(Keys.Right) && SlotPosition <= (MenuItem.Count - 1))
             {

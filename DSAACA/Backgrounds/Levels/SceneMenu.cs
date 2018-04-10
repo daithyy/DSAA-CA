@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using DSAACA.UI;
 using DSAACA.Entities;
+using DSAACA.Components;
 
 namespace DSAACA.Backgrounds.Levels
 {
@@ -25,6 +26,13 @@ namespace DSAACA.Backgrounds.Levels
         {
             ui = new MenuUI(GameRoot.TextureResource["ui_arrow"], 
                 new Vector2(0,0), CreateMenuItems());
+
+            Active = true;
+            
+            Texture.Bounds = new Rectangle(
+                new Point(0, 0),
+                new Point(Helper.GraphicsDevice.Viewport.Width,
+                Helper.GraphicsDevice.Viewport.Height));
         }
 
         #endregion
@@ -35,9 +43,16 @@ namespace DSAACA.Backgrounds.Levels
 
         }
 
-        public override void Draw(SpriteBatch sp)
+        public override void Draw(Game game)
         {
+            SpriteBatch spriteBatch = (SpriteBatch)game.Services.GetService(typeof(SpriteBatch));
 
+            Texture.Draw(spriteBatch);
+        }
+
+        private void Init()
+        {
+            MediaPlayer.Play(BackingTrack);
         }
 
         private List<MenuItem> CreateMenuItems()

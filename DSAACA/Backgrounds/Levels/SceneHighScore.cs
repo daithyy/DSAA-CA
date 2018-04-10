@@ -19,15 +19,15 @@ namespace DSAACA.Backgrounds.Levels
         #endregion
 
         #region Constructor
-        public SceneHighScore(Vector2 position, Sprite texture, Song bgm, Keys key)
-            : base(position, texture, bgm, key)
+        public SceneHighScore(Sprite texture, Song bgm, Keys key)
+            : base(texture, bgm, key)
         {
 
         }
         #endregion
 
         #region Methods
-        public override void Draw(SpriteBatch sp)
+        public override void Draw(Game game)
         {
             throw new NotImplementedException();
         }

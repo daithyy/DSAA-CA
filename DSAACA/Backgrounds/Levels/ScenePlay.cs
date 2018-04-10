@@ -20,8 +20,8 @@ namespace DSAACA.Backgrounds.Levels
         #endregion
 
         #region Constructor
-        public ScenePlay(Vector2 position, Sprite texture, Song bgm, Keys key)
-            : base(position, texture, bgm, key)
+        public ScenePlay(Sprite texture, Song bgm, Keys key)
+            : base(texture, bgm, key)
         {
 
         }
@@ -33,11 +33,9 @@ namespace DSAACA.Backgrounds.Levels
 
         }
 
-        public override void Draw(SpriteBatch sp)
+        public override void Draw(Game game)
         {
-            sp.Draw(Texture.Image, new Rectangle(Position.ToPoint(), new Point(
-            Helper.GraphicsDevice.Viewport.Bounds.Width,
-            Helper.GraphicsDevice.Viewport.Bounds.Height)), Color.White);
+
         }
         #endregion
     }

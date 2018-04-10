@@ -41,13 +41,14 @@ namespace DSAACA.Backgrounds
             _tx = tx;
             BackingTrack = bgm;
             ActivationKey = key;
+            Active = false;
         }
         #endregion
 
         #region Methods
         public abstract void Update();
 
-        public abstract void Draw(SpriteBatch sp);
+        public abstract void Draw(Game game);
         #endregion
     }
 }
