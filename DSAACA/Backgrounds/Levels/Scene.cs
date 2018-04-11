@@ -33,6 +33,7 @@ namespace DSAACA.Backgrounds
         public Song BackingTrack { get; set; }
         public Vector2 Position { get; set; }
         public Keys ActivationKey;
+        public float Alpha;
         #endregion
 
         #region Constructor
@@ -46,7 +47,7 @@ namespace DSAACA.Backgrounds
         #endregion
 
         #region Methods
-        public abstract void Update();
+        public abstract void Update(GameTime gameTime);
 
         public abstract void Draw(SpriteBatch spriteBatch);
         #endregion

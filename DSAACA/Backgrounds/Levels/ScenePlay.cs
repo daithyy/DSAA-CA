@@ -16,7 +16,15 @@ namespace DSAACA.Backgrounds.Levels
     class ScenePlay : Scene
     {
         #region Properties
-
+        private Vector2 playAreaSize
+        {
+            get
+            {
+                return new Vector2(1920, 1080);
+            }
+        }
+        private Camera currentCamera;
+        public Player player;
         #endregion
 
         #region Constructor
@@ -28,14 +36,19 @@ namespace DSAACA.Backgrounds.Levels
         #endregion
 
         #region Methods
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
 
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            
+        }
 
+        public void InitCamera(Game game)
+        {
+            currentCamera = new Camera(game, player.Position, playAreaSize);
         }
         #endregion
     }

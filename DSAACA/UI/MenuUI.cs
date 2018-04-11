@@ -14,13 +14,18 @@ namespace DSAACA.UI
 {
     class MenuUI
     {
+        #region Properties
         public Texture2D Pointer { get; set; }
         private Vector2 StartPosition { get; set; }
         public Vector2 Position { get; set; }
         public bool isVisible = true;
         private List<MenuItem> Slots;
         public int SlotPosition = 0;
+        private float frameTime;
+        private const float TIME_BETWEEN_FRAMES = 150;
+        #endregion
 
+        #region Constructor
         public MenuUI(Texture2D textureIn, Vector2 positionIn, List<MenuItem> slotsIn)
         {
             Pointer = textureIn;
@@ -28,7 +33,9 @@ namespace DSAACA.UI
             StartPosition = positionIn;
             Slots = slotsIn;
         }
+        #endregion
 
+        #region Methods
         public virtual void Update(GameTime gameTime)
         {
             this.Position = new Vector2(
@@ -74,5 +81,20 @@ namespace DSAACA.UI
                 Slots[SlotPosition].isClicked = true;
             }
         }
+
+        public void UpdateAnimation(GameTime gameTime)
+        {
+            // Track how much time has passed ...
+            frameTime += gameTime.ElapsedGameTime.Milliseconds;
+
+            // If it's greater than the frame time then move to the next frame ...
+            if (frameTime >= TIME_BETWEEN_FRAMES)
+            {
+
+
+                frameTime = 0;
+            }
+        }
+        #endregion
     }
 }

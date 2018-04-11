@@ -27,7 +27,6 @@ namespace DSAACA
         public static Dictionary<string, Song> MusicResource;
 
         private SceneManager sceneManager;
-        private Camera currentCamera;
 
         public GameRoot()
         {
@@ -44,7 +43,7 @@ namespace DSAACA
             IsFixedTimeStep = true;
 
             Window.Title = "Data Structures & Algorithms - Easter CA";
-            Window.AllowAltF4 = false;
+            Window.AllowAltF4 = false; 
         }
 
         protected override void Initialize()

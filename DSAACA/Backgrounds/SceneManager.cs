@@ -36,7 +36,8 @@ namespace DSAACA.Backgrounds
         {
             foreach (Scene scene in Scenes)
             {
-                scene.Update();
+                if (scene.Active)
+                    scene.Update(gameTime);
             }
 
             base.Update(gameTime);
@@ -53,7 +54,8 @@ namespace DSAACA.Backgrounds
 
             foreach (Scene scene in Scenes)
             {
-                scene.Draw(spriteBatch);
+                if (scene.Active)
+                    scene.Draw(spriteBatch);
             }
 
             spriteBatch.End();

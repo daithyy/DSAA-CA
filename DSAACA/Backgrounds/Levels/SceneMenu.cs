@@ -18,13 +18,14 @@ namespace DSAACA.Backgrounds.Levels
     {
         #region Properties
         private MenuUI ui;
+        private Queue<Texture2D> Textures;
         #endregion
 
         #region Constructor
         public SceneMenu(Texture2D texture, Song bgm, Keys key)
             : base(texture, bgm, key)
         {
-            ui = new MenuUI(GameRoot.TextureResource["ui_arrow"], 
+            ui = new MenuUI(, 
                 new Vector2(0,0), CreateMenuItems());
 
             Init();
@@ -33,9 +34,9 @@ namespace DSAACA.Backgrounds.Levels
         #endregion
 
         #region Methods
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
-
+            ui.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -45,6 +46,8 @@ namespace DSAACA.Backgrounds.Levels
                 new Point(
                     Helper.GraphicsDevice.Viewport.Bounds.Width,
                     Helper.GraphicsDevice.Viewport.Bounds.Height)), Color.White);
+
+            ui.Draw(spriteBatch);
         }
 
         private void Init()
