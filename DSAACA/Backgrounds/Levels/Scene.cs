@@ -47,7 +47,7 @@ namespace DSAACA.Backgrounds
         public Keys ActivationKey;
         public float Alpha;
         private TimeSpan frameTime;
-        public const float FRAME_SPEED = 150;
+        public const float FRAME_SPEED = 100;
         #endregion
 
         #region Constructor
@@ -58,6 +58,9 @@ namespace DSAACA.Backgrounds
             ActivationKey = key;
             Active = false;
             Alpha = 1.0f;
+
+            texture = textures.Dequeue();
+            textures.Enqueue(texture);
         }
         #endregion
 

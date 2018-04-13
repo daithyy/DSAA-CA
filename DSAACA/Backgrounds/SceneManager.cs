@@ -38,8 +38,6 @@ namespace DSAACA.Backgrounds
             gameRoot = game;
 
             Scenes = new Stack<Scene>();
-            CreateScenes();
-            Scenes.Push(mainMenu);
         }
         #endregion
 
@@ -49,13 +47,16 @@ namespace DSAACA.Backgrounds
             mainMenuTextures = Loader.ContentLoadQueue<Texture2D>(content, "Assets\\Backgrounds\\MainMenu");
             pointerTextures = Loader.ContentLoadQueue<Texture2D>(content, "Assets\\Sprites\\Select");
             MusicResource = Loader.ContentLoad<Song>(content, "Assets\\Music");
+
+            CreateScenes();
+            PushScenes();
         }
 
         public override void Update(GameTime gameTime)
         {
             foreach (Scene scene in Scenes)
             {
-                if (scene.Active)
+                if (scene.Active && scene != null)
                     scene.Update(gameTime);
             }
 
@@ -73,7 +74,7 @@ namespace DSAACA.Backgrounds
 
             foreach (Scene scene in Scenes)
             {
-                if (scene.Active)
+                if (scene.Active && scene != null)
                     scene.Draw(spriteBatch);
             }
 
@@ -85,6 +86,11 @@ namespace DSAACA.Backgrounds
         private void CreateScenes()
         {
             mainMenu = new SceneMenu(mainMenuTextures, pointerTextures, MusicResource["bgm"], Keys.Enter);
+        }
+
+        private void PushScenes()
+        {
+            Scenes.Push(mainMenu);
         }
         #endregion
     }

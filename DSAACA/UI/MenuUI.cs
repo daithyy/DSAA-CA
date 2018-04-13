@@ -16,6 +16,14 @@ namespace DSAACA.UI
     {
         #region Properties
         private Texture2D Texture { get; set; }
+        public Rectangle BoundingRectangle
+        {
+            get
+            {
+                return new Rectangle(Position.ToPoint(), 
+                    Texture.Bounds.Size * new Point(4));
+            }
+        }
         public Queue<Texture2D> Pointer { get; set; }
         private Vector2 StartPosition { get; set; }
         public Vector2 Position { get; set; }
@@ -23,7 +31,7 @@ namespace DSAACA.UI
         private List<MenuItem> Slots;
         public int SlotPosition = 0;
         private TimeSpan frameTime;
-        private const float FRAME_SPEED = 150;
+        private const float FRAME_SPEED = 25;
         private Keys ActivateKey;
         #endregion
 
@@ -35,6 +43,9 @@ namespace DSAACA.UI
             StartPosition = position;
             Slots = slots;
             ActivateKey = activationKey;
+
+            Texture = Pointer.Dequeue();
+            Pointer.Enqueue(Texture);
         }
         #endregion
 
@@ -69,7 +80,7 @@ namespace DSAACA.UI
         {
             if (isVisible)
             {
-                spriteBatch.Draw(Texture, Texture.Bounds, Color.White);
+                spriteBatch.Draw(Texture, BoundingRectangle, Color.White);
             }
         }
 

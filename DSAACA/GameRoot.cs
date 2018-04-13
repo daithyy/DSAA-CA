@@ -66,6 +66,7 @@ namespace DSAACA
             FontResource = Loader.ContentLoad<SpriteFont>(Content, "Assets\\Fonts");
 
             sceneManager = new SceneManager(this);
+            sceneManager.LoadContent(Content);
         }
 
         protected override void UnloadContent()
