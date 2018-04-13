@@ -19,8 +19,8 @@ namespace DSAACA.Backgrounds.Levels
         #endregion
 
         #region Constructor
-        public SceneHighScore(Texture2D texture, Song bgm, Keys key)
-            : base(texture, bgm, key)
+        public SceneHighScore(Queue<Texture2D> textures, Song bgm, Keys key)
+            : base(textures, bgm, key)
         {
 
         }

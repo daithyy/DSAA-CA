@@ -17,17 +17,17 @@ namespace DSAACA.Backgrounds
     public abstract class Scene
     {
         #region Properties
-        private Texture2D _tx;
+        private Queue<Texture2D> _textures;
         public bool Active { get; set; }
-        public Texture2D Texture
+        public Queue<Texture2D> Textures
         {
             get
             {
-                return _tx;
+                return _textures;
             }
             set
             {
-                _tx = value;
+                _textures = value;
             }
         }
         public Song BackingTrack { get; set; }
@@ -37,9 +37,9 @@ namespace DSAACA.Backgrounds
         #endregion
 
         #region Constructor
-        public Scene(Texture2D tx, Song bgm, Keys key)
+        public Scene(Queue<Texture2D> textures, Song bgm, Keys key)
         {
-            _tx = tx;
+            Textures = textures;
             BackingTrack = bgm;
             ActivationKey = key;
             Active = false;
