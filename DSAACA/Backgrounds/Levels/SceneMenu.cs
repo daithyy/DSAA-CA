@@ -18,16 +18,17 @@ namespace DSAACA.Backgrounds.Levels
     {
         #region Properties
         private MenuUI ui;
+        private SpriteFont systemFont;
+        private const int SPACING = 100;        
         #endregion
 
         #region Constructor
         public SceneMenu(Queue<Texture2D> textures, Queue<Texture2D> pointerTextures, Song bgm, Keys key)
             : base(textures, bgm, key)
         {
-            ui = new MenuUI(pointerTextures, 
-                new Vector2(0,0), CreateMenuItems(), key);
-
             Init();
+
+            ui = new MenuUI(pointerTextures, CreateMenuItems(), key);
         }
 
         #endregion
@@ -51,23 +52,38 @@ namespace DSAACA.Backgrounds.Levels
 
         private void Init()
         {
+            systemFont = GameRoot.FontResource["systemFont"];
             Active = true;
+            MediaPlayer.Volume = 0.4f;
             MediaPlayer.Play(BackingTrack);
         }
 
         private List<MenuItem> CreateMenuItems()
         {
+            int viewportCenterWidth = (Helper.GraphicsDevice.Viewport.Width / 2);
+            int viewportCenterHeight = (Helper.GraphicsDevice.Viewport.Height / 2);
+
+            string play = "Play";
+            string highScore = "High Scores";
+            string quit = "Quit";
+
             return new List<MenuItem>
             {
-                new MenuItem("Play",
-                    //GameRoot.TextureResource["ui_arrow"],
-                    GameRoot.FontResource["systemFont"], Color.White, new Vector2(Helper.GraphicsDevice.Viewport.Width / 2 - 100, 300)),
-                new MenuItem("High Scores",
-                    //GameRoot.TextureResource["ui_arrow"],
-                    GameRoot.FontResource["systemFont"], Color.White, new Vector2(Helper.GraphicsDevice.Viewport.Width / 2, 300)),
-                new MenuItem("Quit",
-                    //GameRoot.TextureResource["ui_arrow"],
-                    GameRoot.FontResource["systemFont"], Color.White, new Vector2(Helper.GraphicsDevice.Viewport.Width / 2 + 100, 300))
+                new MenuItem(play.ToUpper(), systemFont, Color.White,
+                new Vector2(viewportCenterWidth -
+                (systemFont.MeasureString(play).X / 2),
+                viewportCenterHeight
+                )),
+                new MenuItem(highScore.ToUpper(), systemFont, Color.White,
+                new Vector2(viewportCenterWidth -
+                (systemFont.MeasureString(highScore).X / 2),
+                viewportCenterHeight + SPACING
+                )),
+                new MenuItem(quit.ToUpper(), systemFont, Color.White,
+                new Vector2(viewportCenterWidth -
+                (systemFont.MeasureString(quit).X / 2),
+                viewportCenterHeight + SPACING * 2
+                ))
             };
         }
         #endregion

@@ -566,3 +566,15 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Backgrounds/MainMenu/l0_bg_30.png
 
+#begin Assets/Sounds/snd_cursor.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Sounds/snd_cursor.wav
+
+#begin Assets/Sounds/snd_cursorE.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Sounds/snd_cursorE.wav
+

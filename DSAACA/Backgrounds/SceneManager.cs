@@ -44,9 +44,10 @@ namespace DSAACA.Backgrounds
         #region Methods
         public void LoadContent(ContentManager content)
         {
+            AudioResource = Loader.ContentLoad<SoundEffect>(content, "Assets\\Sounds");
+            MusicResource = Loader.ContentLoad<Song>(content, "Assets\\Music");
             mainMenuTextures = Loader.ContentLoadQueue<Texture2D>(content, "Assets\\Backgrounds\\MainMenu");
             pointerTextures = Loader.ContentLoadQueue<Texture2D>(content, "Assets\\Sprites\\Select");
-            MusicResource = Loader.ContentLoad<Song>(content, "Assets\\Music");
 
             CreateScenes();
             PushScenes();

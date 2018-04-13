@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using InputManager;
 using DSAACA.Entities;
+using DSAACA.Backgrounds;
 
 namespace DSAACA.UI
 {
@@ -20,7 +21,8 @@ namespace DSAACA.UI
         {
             get
             {
-                return new Rectangle(Position.ToPoint(), 
+                return new Rectangle(
+                    Position.ToPoint() - Texture.Bounds.Center, 
                     Texture.Bounds.Size * new Point(4));
             }
         }
@@ -32,15 +34,14 @@ namespace DSAACA.UI
         public int SlotPosition = 0;
         private TimeSpan frameTime;
         private const float FRAME_SPEED = 25;
+        private const float SPACING = 100;
         private Keys ActivateKey;
         #endregion
 
         #region Constructor
-        public MenuUI(Queue<Texture2D> textures, Vector2 position, List<MenuItem> slots, Keys activationKey)
+        public MenuUI(Queue<Texture2D> textures, List<MenuItem> slots, Keys activationKey)
         {
             Pointer = textures;
-            Position = position;
-            StartPosition = position;
             Slots = slots;
             ActivateKey = activationKey;
 
@@ -52,26 +53,8 @@ namespace DSAACA.UI
         #region Methods
         public virtual void Update(GameTime gameTime)
         {
-            Position = new Vector2(Slots[SlotPosition].Position.X, Slots[SlotPosition].Position.Y);
-
-            if (InputEngine.IsKeyPressed(Keys.Right) && SlotPosition <= (MenuItem.Count - 1))
-            {
-                SlotPosition++;
-                if (SlotPosition == (MenuItem.Count))
-                {
-                    this.Position = StartPosition;
-                    SlotPosition = 0;
-                }
-            }
-            else if (InputEngine.IsKeyPressed(Keys.Left) && SlotPosition >= 0)
-            {
-                if (SlotPosition == 0)
-                {
-                    SlotPosition = MenuItem.Count;
-                }
-                SlotPosition--;
-            }
-
+            UpdateSlots(gameTime);
+            SelectPosition();
             HandleSelection();
             UpdateAnimation(gameTime);
         }
@@ -81,6 +64,41 @@ namespace DSAACA.UI
             if (isVisible)
             {
                 spriteBatch.Draw(Texture, BoundingRectangle, Color.White);
+
+                foreach (MenuItem item in Slots)
+                {
+                    item.Draw(spriteBatch);
+                }
+            }
+        }
+
+        private void SelectPosition()
+        {
+            Position = new Vector2(
+                Slots[SlotPosition].Position.X - SPACING, 
+                Slots[SlotPosition].Position.Y);
+
+            if (InputEngine.IsKeyPressed(Keys.S) ||
+                InputEngine.IsKeyPressed(Keys.Down)
+                && SlotPosition <= (MenuItem.Count - 1))
+            {
+                SceneManager.AudioResource["snd_cursor"].Play();
+                SlotPosition++;
+                if (SlotPosition == (MenuItem.Count))
+                {                    
+                    SlotPosition = 0;
+                }
+            }
+            else if (InputEngine.IsKeyPressed(Keys.W) ||
+                InputEngine.IsKeyPressed(Keys.Up)
+                && SlotPosition >= 0)
+            {
+                SceneManager.AudioResource["snd_cursor"].Play();
+                if (SlotPosition == 0)
+                {
+                    SlotPosition = MenuItem.Count;
+                }
+                SlotPosition--;
             }
         }
 
@@ -88,7 +106,21 @@ namespace DSAACA.UI
         {
             if (InputEngine.IsKeyPressed(ActivateKey))
             {
+                SceneManager.AudioResource["snd_cursorE"].Play();
                 Slots[SlotPosition].isClicked = true;
+            }
+        }
+
+        private void UpdateSlots(GameTime gameTime)
+        {
+            foreach (MenuItem item in Slots)
+            {
+                item.Update(gameTime);
+
+                if (item != null && item.isClicked)
+                {
+                    item.isClicked = false;
+                }
             }
         }
 
