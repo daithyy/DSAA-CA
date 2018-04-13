@@ -24,6 +24,7 @@ namespace DSAACA.Backgrounds
         private SceneHighScore highScore;
         private Game gameRoot;
 
+        public static Dictionary<string, Texture2D> TextureResource;
         public static Dictionary<string, SoundEffect> AudioResource;
         public static Dictionary<string, Song> MusicResource;
         private Queue<Texture2D> mainMenuTextures;
@@ -44,13 +45,14 @@ namespace DSAACA.Backgrounds
         #region Methods
         public void LoadContent(ContentManager content)
         {
+            TextureResource = Loader.ContentLoad<Texture2D>(content, "Assets\\Sprites");
             AudioResource = Loader.ContentLoad<SoundEffect>(content, "Assets\\Sounds");
             MusicResource = Loader.ContentLoad<Song>(content, "Assets\\Music");
             mainMenuTextures = Loader.ContentLoadQueue<Texture2D>(content, "Assets\\Backgrounds\\MainMenu");
             pointerTextures = Loader.ContentLoadQueue<Texture2D>(content, "Assets\\Sprites\\Select");
+            highScoreTextures = Loader.ContentLoadQueue<Texture2D>(content, "Assetsz\\Backgrounds\\HighScore");
 
             CreateScenes();
-            PushScenes();
         }
 
         public override void Update(GameTime gameTime)
@@ -86,11 +88,10 @@ namespace DSAACA.Backgrounds
 
         private void CreateScenes()
         {
-            mainMenu = new SceneMenu(mainMenuTextures, pointerTextures, MusicResource["bgm"], Keys.Enter);
-        }
+            mainMenu = new SceneMenu(mainMenuTextures, pointerTextures, MusicResource["bgm_play"], Keys.Enter);
+            play = new ScenePlay(null, MusicResource["bgm_play"], Keys.Escape);
+            highScore = new SceneHighScore(highScoreTextures, MusicResource["bgm_highScore"], Keys.Escape);
 
-        private void PushScenes()
-        {
             Scenes.Push(mainMenu);
         }
         #endregion

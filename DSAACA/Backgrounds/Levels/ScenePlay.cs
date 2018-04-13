@@ -31,7 +31,7 @@ namespace DSAACA.Backgrounds.Levels
         public ScenePlay(Queue<Texture2D> textures, Song bgm, Keys key)
             : base(textures, bgm, key)
         {
-
+            Init();
         }
         #endregion
 
@@ -44,6 +44,11 @@ namespace DSAACA.Backgrounds.Levels
         public override void Draw(SpriteBatch spriteBatch)
         {
             
+        }
+
+        private void Init()
+        {
+            player = new Player()
         }
 
         public void InitCamera(Game game)

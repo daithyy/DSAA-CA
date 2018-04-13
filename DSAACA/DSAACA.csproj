@@ -50,6 +50,7 @@
     <Compile Include="Components\Helpers.cs" />
     <Compile Include="Components\InputEngine.cs" />
     <Compile Include="Components\Loader.cs" />
+    <Compile Include="Entities\Collectables.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Entities\Sprite.cs" />
     <Compile Include="GameRoot.cs" />

@@ -59,8 +59,11 @@ namespace DSAACA.Backgrounds
             Active = false;
             Alpha = 1.0f;
 
-            texture = textures.Dequeue();
-            textures.Enqueue(texture);
+            if (textures != null)
+            {
+                texture = textures.Dequeue();
+                textures.Enqueue(texture);
+            }
         }
         #endregion
 
