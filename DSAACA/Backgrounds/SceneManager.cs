@@ -9,6 +9,9 @@ using Microsoft.Xna.Framework.Input;
 using DSAACA.Backgrounds.Levels;
 using Microsoft.Xna.Framework.Graphics;
 using DSAACA.Components;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 
 namespace DSAACA.Backgrounds
 {
@@ -17,7 +20,15 @@ namespace DSAACA.Backgrounds
         #region Properties
         public Stack<Scene> Scenes;
         private SceneMenu mainMenu;
+        private ScenePlay play;
+        private SceneHighScore highScore;
         private Game gameRoot;
+
+        public static Dictionary<string, SoundEffect> AudioResource;
+        public static Dictionary<string, Song> MusicResource;
+        private Queue<Texture2D> mainMenuTextures;
+        private Queue<Texture2D> highScoreTextures;
+        private Queue<Texture2D> pointerTextures;
         #endregion
 
         #region Constructor
@@ -25,6 +36,7 @@ namespace DSAACA.Backgrounds
         {
             game.Components.Add(this);
             gameRoot = game;
+
             Scenes = new Stack<Scene>();
             CreateScenes();
             Scenes.Push(mainMenu);
@@ -32,6 +44,13 @@ namespace DSAACA.Backgrounds
         #endregion
 
         #region Methods
+        public void LoadContent(ContentManager content)
+        {
+            mainMenuTextures = Loader.ContentLoadQueue<Texture2D>(content, "Assets\\Backgrounds\\MainMenu");
+            pointerTextures = Loader.ContentLoadQueue<Texture2D>(content, "Assets\\Sprites\\Select");
+            MusicResource = Loader.ContentLoad<Song>(content, "Assets\\Music");
+        }
+
         public override void Update(GameTime gameTime)
         {
             foreach (Scene scene in Scenes)
@@ -65,10 +84,7 @@ namespace DSAACA.Backgrounds
 
         private void CreateScenes()
         {
-            mainMenu = new SceneMenu(
-                GameRoot.TextureResource["mainMenu"],
-                GameRoot.MusicResource["bgm"],
-                Keys.Enter);
+            mainMenu = new SceneMenu(mainMenuTextures, pointerTextures, MusicResource["bgm"], Keys.Enter);
         }
         #endregion
     }

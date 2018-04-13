@@ -22,9 +22,6 @@ namespace DSAACA
         private int _height = 720;
 
         public static Dictionary<string, SpriteFont> FontResource;
-        public static Dictionary<string, Texture2D> TextureResource;
-        public static Dictionary<string, SoundEffect> AudioResource;
-        public static Dictionary<string, Song> MusicResource;
 
         private SceneManager sceneManager;
 
@@ -67,8 +64,6 @@ namespace DSAACA
             Services.AddService(spriteBatch);
 
             FontResource = Loader.ContentLoad<SpriteFont>(Content, "Assets\\Fonts");
-            TextureResource = Loader.ContentLoad<Texture2D>(Content, "Assets\\Sprites");
-            MusicResource = Loader.ContentLoad<Song>(Content, "Assets\\Music");
 
             sceneManager = new SceneManager(this);
         }

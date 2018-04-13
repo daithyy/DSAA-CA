@@ -21,11 +21,11 @@ namespace DSAACA.Backgrounds.Levels
         #endregion
 
         #region Constructor
-        public SceneMenu(Queue<Texture2D> textures, Song bgm, Keys key)
+        public SceneMenu(Queue<Texture2D> textures, Queue<Texture2D> pointerTextures, Song bgm, Keys key)
             : base(textures, bgm, key)
         {
-            ui = new MenuUI(// Hand Select textures, 
-                new Vector2(0,0), CreateMenuItems());
+            ui = new MenuUI(pointerTextures, 
+                new Vector2(0,0), CreateMenuItems(), key);
 
             Init();
         }
@@ -35,13 +35,13 @@ namespace DSAACA.Backgrounds.Levels
         #region Methods
         public override void Update(GameTime gameTime)
         {
+            UpdateAnimation(gameTime);
             ui.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, new Rectangle(
-                new Point((int)Position.X, (int)Position.Y), 
+            spriteBatch.Draw(Texture, new Rectangle(Position.ToPoint(), 
                 new Point(
                     Helper.GraphicsDevice.Viewport.Bounds.Width,
                     Helper.GraphicsDevice.Viewport.Bounds.Height)), Color.White);
@@ -60,14 +60,14 @@ namespace DSAACA.Backgrounds.Levels
             return new List<MenuItem>
             {
                 new MenuItem("Play",
-                    GameRoot.TextureResource["ui_arrow"],
-                    GameRoot.FontResource["systemFont"], Color.White, new Vector2(0, 0)),
+                    //GameRoot.TextureResource["ui_arrow"],
+                    GameRoot.FontResource["systemFont"], Color.White, new Vector2(Helper.GraphicsDevice.Viewport.Width / 2 - 100, 300)),
                 new MenuItem("High Scores",
-                    GameRoot.TextureResource["ui_arrow"],
-                    GameRoot.FontResource["systemFont"], Color.White, new Vector2(0, 0)),
+                    //GameRoot.TextureResource["ui_arrow"],
+                    GameRoot.FontResource["systemFont"], Color.White, new Vector2(Helper.GraphicsDevice.Viewport.Width / 2, 300)),
                 new MenuItem("Quit",
-                    GameRoot.TextureResource["ui_arrow"],
-                    GameRoot.FontResource["systemFont"], Color.White, new Vector2(0, 0))
+                    //GameRoot.TextureResource["ui_arrow"],
+                    GameRoot.FontResource["systemFont"], Color.White, new Vector2(Helper.GraphicsDevice.Viewport.Width / 2 + 100, 300))
             };
         }
         #endregion

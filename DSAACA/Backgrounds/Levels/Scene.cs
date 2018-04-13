@@ -17,8 +17,20 @@ namespace DSAACA.Backgrounds
     public abstract class Scene
     {
         #region Properties
+        private Texture2D texture;
         private Queue<Texture2D> _textures;
         public bool Active { get; set; }
+        public Texture2D Texture
+        {
+            get
+            {
+                return texture;
+            }
+            set
+            {
+                texture = value;
+            }
+        }
         public Queue<Texture2D> Textures
         {
             get
@@ -34,6 +46,8 @@ namespace DSAACA.Backgrounds
         public Vector2 Position { get; set; }
         public Keys ActivationKey;
         public float Alpha;
+        private TimeSpan frameTime;
+        public const float FRAME_SPEED = 150;
         #endregion
 
         #region Constructor
@@ -43,6 +57,7 @@ namespace DSAACA.Backgrounds
             BackingTrack = bgm;
             ActivationKey = key;
             Active = false;
+            Alpha = 1.0f;
         }
         #endregion
 
@@ -50,6 +65,20 @@ namespace DSAACA.Backgrounds
         public abstract void Update(GameTime gameTime);
 
         public abstract void Draw(SpriteBatch spriteBatch);
+
+        public void UpdateAnimation(GameTime gameTime)
+        {
+            // Track how much time has passed ...
+            frameTime += gameTime.ElapsedGameTime;
+
+            // If it's greater than the frame time then move to the next frame ...
+            if (frameTime.Milliseconds >= FRAME_SPEED)
+            {
+                Texture = Textures.Dequeue();
+                Textures.Enqueue(Texture);
+                frameTime = TimeSpan.Zero;
+            }
+        }
         #endregion
     }
 }
