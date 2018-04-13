@@ -48,7 +48,7 @@ namespace DSAACA.Backgrounds.Levels
 
         private void Init()
         {
-            player = new Player()
+            player = new Player(SceneManager.TextureResource["player"], new Vector2(100, 100), 1);
         }
 
         public void InitCamera(Game game)

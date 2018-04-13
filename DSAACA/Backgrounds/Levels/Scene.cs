@@ -64,6 +64,8 @@ namespace DSAACA.Backgrounds
                 texture = textures.Dequeue();
                 textures.Enqueue(texture);
             }
+
+            MediaPlayer.Volume = 0.4f;
         }
         #endregion
 

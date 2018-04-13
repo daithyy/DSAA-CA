@@ -30,9 +30,10 @@ namespace DSAACA.UI
         private Vector2 StartPosition { get; set; }
         public Vector2 Position { get; set; }
         public bool isVisible = true;
-        private List<MenuItem> Slots;
+        public List<MenuItem> Slots;
         public int SlotPosition = 0;
         private TimeSpan frameTime;
+        private const float CURSOR_SPEED = 0.25f;
         private const float FRAME_SPEED = 25;
         private const float SPACING = 100;
         private Keys ActivateKey;
@@ -54,7 +55,7 @@ namespace DSAACA.UI
         public virtual void Update(GameTime gameTime)
         {
             UpdateSlots(gameTime);
-            SelectPosition();
+            UpdateSelectPosition();
             HandleSelection();
             UpdateAnimation(gameTime);
         }
@@ -72,11 +73,11 @@ namespace DSAACA.UI
             }
         }
 
-        private void SelectPosition()
+        private void UpdateSelectPosition()
         {
-            Position = new Vector2(
+            Position = Vector2.Lerp(Position, new Vector2(
                 Slots[SlotPosition].Position.X - SPACING, 
-                Slots[SlotPosition].Position.Y);
+                Slots[SlotPosition].Position.Y), CURSOR_SPEED);
 
             if (InputEngine.IsKeyPressed(Keys.S) ||
                 InputEngine.IsKeyPressed(Keys.Down)
@@ -117,10 +118,10 @@ namespace DSAACA.UI
             {
                 item.Update(gameTime);
 
-                if (item != null && item.isClicked)
-                {
-                    item.isClicked = false;
-                }
+                //if (item != null && item.isClicked)
+                //{
+                //    item.isClicked = false;
+                //}
             }
         }
 

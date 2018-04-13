@@ -17,7 +17,7 @@ namespace DSAACA.Backgrounds.Levels
     class SceneMenu : Scene
     {
         #region Properties
-        private MenuUI ui;
+        public MenuUI UserInterface;
         private SpriteFont systemFont;
         private const int SPACING = 100;        
         #endregion
@@ -28,7 +28,7 @@ namespace DSAACA.Backgrounds.Levels
         {
             Init();
 
-            ui = new MenuUI(pointerTextures, CreateMenuItems(), key);
+            UserInterface = new MenuUI(pointerTextures, CreateMenuItems(), key);
         }
 
         #endregion
@@ -37,7 +37,7 @@ namespace DSAACA.Backgrounds.Levels
         public override void Update(GameTime gameTime)
         {
             UpdateAnimation(gameTime);
-            ui.Update(gameTime);
+            UserInterface.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -47,14 +47,12 @@ namespace DSAACA.Backgrounds.Levels
                     Helper.GraphicsDevice.Viewport.Bounds.Width,
                     Helper.GraphicsDevice.Viewport.Bounds.Height)), Color.White);
 
-            ui.Draw(spriteBatch);
+            UserInterface.Draw(spriteBatch);
         }
 
         private void Init()
         {
             systemFont = GameRoot.FontResource["systemFont"];
-            Active = true;
-            MediaPlayer.Volume = 0.4f;
             MediaPlayer.Play(BackingTrack);
         }
 
