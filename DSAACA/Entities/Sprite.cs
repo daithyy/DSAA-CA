@@ -14,9 +14,21 @@ namespace DSAACA.Entities
     {
         #region Properties
         // Initialize public variables ...
+        public bool IsActive;
         public Texture2D Image;
         public Vector2 Position;
-        public Rectangle Bounds;
+        private Rectangle bounds;
+        public Rectangle Bounds
+        {
+            get
+            {
+                return new Rectangle(Position.ToPoint(), bounds.Size);
+            }
+            set
+            {
+                bounds = value;
+            }
+        }
         public Color Tint;
 
         // Animated Sprite
@@ -53,6 +65,8 @@ namespace DSAACA.Entities
             Bounds = new Rectangle((int)position.X, (int)position.Y,
                 image.Width / frameCount,
                 image.Height);
+
+            IsActive = true;
         }
         #endregion
 
@@ -60,47 +74,52 @@ namespace DSAACA.Entities
         // Update Method
         public void UpdateAnimation(GameTime gameTime)
         {
-            // Track how much time has passed ...
-            elapsedTime += gameTime.ElapsedGameTime.Milliseconds;
-
-            // If it's greater than the frame time then move to the next frame ...
-            if (elapsedTime >= millisecondsBetweenFrames)
+            if (IsActive)
             {
-                currentFrame++;
+                // Track how much time has passed ...
+                elapsedTime += gameTime.ElapsedGameTime.Milliseconds;
 
-                if (currentFrame > (numberOfFrames - 1))
-                    currentFrame = 0;
+                // If it's greater than the frame time then move to the next frame ...
+                if (elapsedTime >= millisecondsBetweenFrames)
+                {
+                    currentFrame++;
 
-                elapsedTime = 0;
+                    if (currentFrame > (numberOfFrames - 1))
+                        currentFrame = 0;
+
+                    elapsedTime = 0;
+                }
+
+                // Update our source rectangle ...
+                SourceRectangle = new Rectangle(
+                    currentFrame * (Image.Width / numberOfFrames), // This bracket can be a variable (spriteWidth)
+                    0,
+                    Image.Width / numberOfFrames,
+                    Image.Height);
             }
-
-            // Update our source rectangle ...
-            SourceRectangle = new Rectangle(
-                currentFrame * (Image.Width / numberOfFrames), // This bracket can be a variable (spriteWidth)
-                0,
-                Image.Width / numberOfFrames,
-                Image.Height);
         }
 
         // Draw Method (Caller has a spritebatch ready and has already called SpriteBatch.Begin())
         public void Draw(SpriteBatch sp)
         {
-            sp.Draw(Image, Position, SourceRectangle, Tint);
+            if (IsActive)
+                sp.Draw(Image, Position, SourceRectangle, Tint);
         }
 
         // Overload Draw Method (Same name, different arguments)
         public void Draw(SpriteBatch sp, SpriteFont sfont)
         {
-            Draw(sp); // Call the Draw Method above ...
-            sp.DrawString(sfont, Position.ToString(), Position, Color.White);
+            if (IsActive)
+            {
+                Draw(sp); // Call the Draw Method above ...
+                sp.DrawString(sfont, Position.ToString(), Position, Color.White);
+            }
         }
 
         // Move Method (Move the sprite by a given amount)
         public virtual void Move(Vector2 delta)
         {
             Position += delta;
-            Bounds.X = (int)Position.X;
-            Bounds.Y = (int)Position.Y;
         }
 
         // Collision Method ()

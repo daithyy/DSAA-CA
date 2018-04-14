@@ -9,7 +9,6 @@ namespace DSAACA.Components
 {
     public static class Helper
     {
-        public static Game GameRoot;
         public static GraphicsDevice GraphicsDevice;
     }
 }

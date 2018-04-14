@@ -40,8 +40,8 @@ namespace DSAACA.Entities
         private void Init()
         {
             const float MAX_VELOCITY = 3f;
-            const float DECCELERATION = 0.1f;
-            const float ACCELERATION = 0.4f;
+            const float DECCELERATION = 0.2f;
+            const float ACCELERATION = 0.5f;
 
             MaxVelocity = new Vector2(MAX_VELOCITY);
             Acceleration = new Vector2(ACCELERATION);

@@ -11,7 +11,7 @@ namespace DSAACA.Components
     {
         #region Properties
         public static Vector2 Target;
-        public static Vector2 _camPos = Vector2.Zero;
+        private static Vector2 _camPos = Vector2.Zero;
         public static Vector2 WorldBound;
         public float CameraSpeed = 0.03f;
         public float CameraSpread = 120f;
@@ -20,7 +20,7 @@ namespace DSAACA.Components
         private const float ZOOM_SPEED = 0.01f;
 
         // Only one Random object needed
-        public static readonly Random random = new Random();
+        public static readonly Random Random = new Random();
 
         private bool shaking;
         // The maximum magnitude of our shake offset
@@ -125,7 +125,7 @@ namespace DSAACA.Components
         /// </summary>
         private float NextFloat()
         {
-            return (float)random.NextDouble() * 2f - 1f;
+            return (float)Random.NextDouble() * 2f - 1f;
         }
 
         /// <summary>

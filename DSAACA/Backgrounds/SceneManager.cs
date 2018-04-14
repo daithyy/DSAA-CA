@@ -62,7 +62,8 @@ namespace DSAACA.Backgrounds
 
         public override void Update(GameTime gameTime)
         {
-            ChangeScene(Listen());
+            ChangeSceneFromMenu(Listen());
+            CheckScore(ScenePlay.Score);
 
             foreach (Scene scene in Scenes)
             {
@@ -104,7 +105,7 @@ namespace DSAACA.Backgrounds
             Scenes.Push(mainMenu);
         }
 
-        private MenuItem Listen()
+        private string Listen()
         {
             return Scenes
                 .Where(s => s.GetType() == typeof(SceneMenu))
@@ -113,14 +114,15 @@ namespace DSAACA.Backgrounds
                 .Select(ui => ui.Slots)
                 .SelectMany(sl => sl)
                 .Where(sl => sl.isClicked == true)
+                .Select(sl => sl.Name)
                 .SingleOrDefault();
         }
 
-        private void ChangeScene(MenuItem item)
+        private void ChangeSceneFromMenu(string sceneName)
         {
-            if (item != null)
+            if (sceneName != null)
             {
-                switch (item.Name.ToUpper())
+                switch (sceneName.ToUpper())
                 {
                     case "PLAY":
                         SwitchScene(play);
@@ -132,6 +134,7 @@ namespace DSAACA.Backgrounds
                         Game.Exit();
                         break;
                     default:
+                        SwitchScene(mainMenu);
                         break;
                 }
             }
@@ -146,6 +149,14 @@ namespace DSAACA.Backgrounds
             nextScene = Scenes.Peek();
             nextScene.Active = true;
             MediaPlayer.Play(nextScene.BackingTrack);
+        }
+
+        private void CheckScore(int gameScore)
+        {
+            if (gameScore >= ScenePlay.MAX_SCORE)
+            {
+                SwitchScene(highScore);
+            }
         }
         #endregion
     }
