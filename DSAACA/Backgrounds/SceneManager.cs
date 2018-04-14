@@ -65,11 +65,9 @@ namespace DSAACA.Backgrounds
             ChangeSceneFromMenu(Listen());
             CheckScore(ScenePlay.Score);
 
-            foreach (Scene scene in Scenes)
-            {
-                if (scene.Active && scene != null)
-                    scene.Update(gameTime);
-            }
+            currentScene = Scenes.Peek();
+            if (currentScene.Active)
+                currentScene.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -83,11 +81,9 @@ namespace DSAACA.Backgrounds
                 BlendState.AlphaBlend, 
                 SamplerState.PointClamp, null, null, null, Camera.CurrentCameraTranslation);
 
-            foreach (Scene scene in Scenes)
-            {
-                if (scene.Active && scene != null)
-                    scene.Draw(spriteBatch);
-            }
+            currentScene = Scenes.Peek();
+            if (currentScene.Active)
+                currentScene.Draw(spriteBatch);
 
             spriteBatch.End();
 
