@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using DSAACA.Entities;
+using DSAACA.Components;
 
 namespace DSAACA.UI
 {
@@ -44,7 +45,7 @@ namespace DSAACA.UI
         {
             if (isVisible)
             {
-                spriteBatch.DrawString(UIFont, Name, Position, CurrentColor);
+                spriteBatch.DrawString(UIFont, Name, Position + Camera.CamPos, CurrentColor);
             }
         }
         #endregion

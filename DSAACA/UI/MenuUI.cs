@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using InputManager;
 using DSAACA.Entities;
 using DSAACA.Backgrounds;
+using DSAACA.Components;
 
 namespace DSAACA.UI
 {
@@ -22,7 +23,8 @@ namespace DSAACA.UI
             get
             {
                 return new Rectangle(
-                    Position.ToPoint() - Texture.Bounds.Center, 
+                    (Position.ToPoint() - Texture.Bounds.Center)
+                    + Camera.CamPos.ToPoint(), 
                     Texture.Bounds.Size * new Point(4));
             }
         }
@@ -107,7 +109,6 @@ namespace DSAACA.UI
         {
             if (InputEngine.IsKeyPressed(ActivateKey))
             {
-                SceneManager.AudioResource["snd_cursorE"].Play();
                 Slots[SlotPosition].isClicked = true;
             }
         }
@@ -117,11 +118,6 @@ namespace DSAACA.UI
             foreach (MenuItem item in Slots)
             {
                 item.Update(gameTime);
-
-                //if (item != null && item.isClicked)
-                //{
-                //    item.isClicked = false;
-                //}
             }
         }
 
@@ -136,6 +132,14 @@ namespace DSAACA.UI
                 Texture = Pointer.Dequeue();
                 Pointer.Enqueue(Texture);
                 frameTime = TimeSpan.Zero;
+            }
+        }
+
+        public void ResetSlotState()
+        {
+            foreach (MenuItem item in Slots)
+            {
+                item.isClicked = false;
             }
         }
         #endregion

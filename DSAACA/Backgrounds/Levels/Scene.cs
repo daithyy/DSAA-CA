@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Input;
 using DSAACA.Components;
 using DSAACA.Entities;
+using InputManager;
 
 namespace DSAACA.Backgrounds
 {
@@ -45,17 +46,19 @@ namespace DSAACA.Backgrounds
         public Song BackingTrack { get; set; }
         public Vector2 Position { get; set; }
         public Keys ActivationKey;
+        public Keys EscapeKey;
         public float Alpha;
         private TimeSpan frameTime;
         public const float FRAME_SPEED = 100;
         #endregion
 
         #region Constructor
-        public Scene(Queue<Texture2D> textures, Song bgm, Keys key)
+        public Scene(Queue<Texture2D> textures, Song bgm, Keys activateKey, Keys escapeKey)
         {
             Textures = textures;
             BackingTrack = bgm;
-            ActivationKey = key;
+            ActivationKey = activateKey;
+            EscapeKey = escapeKey;
             Active = false;
             Alpha = 1.0f;
 
@@ -86,6 +89,14 @@ namespace DSAACA.Backgrounds
                 Textures.Enqueue(Texture);
                 frameTime = TimeSpan.Zero;
             }
+        }
+
+        public bool EscapeScene()
+        {
+            if (InputEngine.IsKeyPressed(EscapeKey))
+                return true;
+            else
+                return false;
         }
         #endregion
     }

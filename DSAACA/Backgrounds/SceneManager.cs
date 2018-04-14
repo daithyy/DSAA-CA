@@ -69,6 +69,8 @@ namespace DSAACA.Backgrounds
             if (currentScene.Active)
                 currentScene.Update(gameTime);
 
+            ListenExit();
+
             base.Update(gameTime);
         }
 
@@ -92,10 +94,10 @@ namespace DSAACA.Backgrounds
 
         private void CreateScenes()
         {
-            mainMenu = new SceneMenu(mainMenuTextures, pointerTextures, MusicResource["bgm_menu"], Keys.Enter);
-            play = new ScenePlay(null, MusicResource["bgm_play"], Keys.Escape);
+            mainMenu = new SceneMenu(mainMenuTextures, pointerTextures, MusicResource["bgm_menu"], Keys.Enter, Keys.Escape);
+            play = new ScenePlay(null, MusicResource["bgm_play"], Keys.None, Keys.Escape);
             play.InitCamera(gameRoot);
-            highScore = new SceneHighScore(highScoreTextures, MusicResource["bgm_highScore"], Keys.Escape);
+            highScore = new SceneHighScore(highScoreTextures, MusicResource["bgm_highScore"], Keys.Enter, Keys.Escape);
 
             mainMenu.Active = true;
             Scenes.Push(mainMenu);
@@ -133,18 +135,25 @@ namespace DSAACA.Backgrounds
                         SwitchScene(mainMenu);
                         break;
                 }
+
+                mainMenu.UserInterface.ResetSlotState();
             }
         }
 
         private void SwitchScene(Scene pushScene)
         {
-            previousScene = Scenes.Pop();
-            previousScene.Active = false;
-            MediaPlayer.Stop();
-            Scenes.Push(pushScene);
-            currentScene = Scenes.Peek();
-            currentScene.Active = true;
-            MediaPlayer.Play(currentScene.BackingTrack);
+            if (pushScene != null)
+            {
+                previousScene = Scenes.Pop();
+                previousScene.Active = false;
+                MediaPlayer.Stop();
+                Scenes.Push(pushScene);
+                currentScene = Scenes.Peek();
+                currentScene.Active = true;
+
+                AudioResource["snd_cursorE"].Play();            
+                MediaPlayer.Play(currentScene.BackingTrack);
+            }
         }
 
         private void CheckScore(int gameScore)
@@ -153,6 +162,12 @@ namespace DSAACA.Backgrounds
             {
                 SwitchScene(highScore);
             }
+        }
+
+        private void ListenExit()
+        {
+            if (currentScene.EscapeScene())
+                SwitchScene(previousScene);
         }
         #endregion
     }

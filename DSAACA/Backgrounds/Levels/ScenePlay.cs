@@ -34,8 +34,8 @@ namespace DSAACA.Backgrounds.Levels
         #endregion
 
         #region Constructor
-        public ScenePlay(Queue<Texture2D> textures, Song bgm, Keys key)
-            : base(textures, bgm, key)
+        public ScenePlay(Queue<Texture2D> textures, Song bgm, Keys activateKey, Keys escapeKey)
+            : base(textures, bgm, activateKey, escapeKey)
         {
             Init();
         }

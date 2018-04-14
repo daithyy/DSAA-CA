@@ -23,12 +23,12 @@ namespace DSAACA.Backgrounds.Levels
         #endregion
 
         #region Constructor
-        public SceneMenu(Queue<Texture2D> textures, Queue<Texture2D> pointerTextures, Song bgm, Keys key)
-            : base(textures, bgm, key)
+        public SceneMenu(Queue<Texture2D> textures, Queue<Texture2D> pointerTextures, Song bgm, Keys activateKey, Keys escapeKey)
+            : base(textures, bgm, activateKey, escapeKey)
         {
             Init();
 
-            UserInterface = new MenuUI(pointerTextures, CreateMenuItems(), key);
+            UserInterface = new MenuUI(pointerTextures, CreateMenuItems(), activateKey);
         }
 
         #endregion
@@ -42,7 +42,7 @@ namespace DSAACA.Backgrounds.Levels
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, new Rectangle(Position.ToPoint(), 
+            spriteBatch.Draw(Texture, new Rectangle(Position.ToPoint() + Camera.CamPos.ToPoint(), 
                 new Point(
                     Helper.GraphicsDevice.Viewport.Bounds.Width,
                     Helper.GraphicsDevice.Viewport.Bounds.Height)), Color.White);
