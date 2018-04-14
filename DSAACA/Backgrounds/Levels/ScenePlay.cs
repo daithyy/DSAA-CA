@@ -16,6 +16,7 @@ namespace DSAACA.Backgrounds.Levels
     class ScenePlay : Scene
     {
         #region Properties
+        private Texture2D backgroundTexture;
         private Vector2 playAreaSize
         {
             get
@@ -38,22 +39,35 @@ namespace DSAACA.Backgrounds.Levels
         #region Methods
         public override void Update(GameTime gameTime)
         {
-
+            Camera.Follow(player.CentrePosition, Helper.GraphicsDevice.Viewport, currentCamera.CameraSpeed);
+            player.Update(gameTime);
+            player.UpdateAnimation(gameTime);
+            ClampPlayer(playAreaSize);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            
+            spriteBatch.Draw(backgroundTexture, new Rectangle(new Point(0), playAreaSize.ToPoint()), Color.White);
+            player.Draw(spriteBatch);
         }
 
         private void Init()
         {
             player = new Player(SceneManager.TextureResource["player"], new Vector2(100, 100), 1);
+            backgroundTexture = SceneManager.BackgroundResourcePlay["bg_ground"];
         }
 
         public void InitCamera(Game game)
         {
-            currentCamera = new Camera(game, player.Position, playAreaSize);
+            currentCamera = new Camera(game, new Vector2(0,0), playAreaSize);
+        }
+
+        private void ClampPlayer(Vector2 worldBounds)
+        {
+            player.Position = Vector2.Clamp(
+                player.Position, 
+                Vector2.Zero, 
+                new Vector2(worldBounds.X - player.Bounds.Width, worldBounds.Y - player.Bounds.Height));
         }
         #endregion
     }

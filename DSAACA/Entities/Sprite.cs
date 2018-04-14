@@ -21,7 +21,15 @@ namespace DSAACA.Entities
 
         // Animated Sprite
         // Source Rectangle used to determine where inside the spritesheet we are drawing ...
-        public Rectangle sourceRectangle;
+        public Rectangle SourceRectangle;
+
+        public Vector2 CentrePosition
+        {
+            get
+            {
+                return new Vector2(Position.X + Bounds.Width / 2, Position.Y + Bounds.Height / 2);
+            }
+        }
 
         int currentFrame = 0;
         int numberOfFrames = 0;
@@ -67,7 +75,7 @@ namespace DSAACA.Entities
             }
 
             // Update our source rectangle ...
-            sourceRectangle = new Rectangle(
+            SourceRectangle = new Rectangle(
                 currentFrame * (Image.Width / numberOfFrames), // This bracket can be a variable (spriteWidth)
                 0,
                 Image.Width / numberOfFrames,
@@ -77,7 +85,7 @@ namespace DSAACA.Entities
         // Draw Method (Caller has a spritebatch ready and has already called SpriteBatch.Begin())
         public void Draw(SpriteBatch sp)
         {
-            sp.Draw(Image, Position, sourceRectangle, Tint);
+            sp.Draw(Image, Position, SourceRectangle, Tint);
         }
 
         // Overload Draw Method (Same name, different arguments)
@@ -88,7 +96,7 @@ namespace DSAACA.Entities
         }
 
         // Move Method (Move the sprite by a given amount)
-        public void Move(Vector2 delta)
+        public virtual void Move(Vector2 delta)
         {
             Position += delta;
             Bounds.X = (int)Position.X;

@@ -27,7 +27,7 @@ namespace DSAACA.Backgrounds
         private SceneHighScore highScore;
         private Game gameRoot;
 
-        public static Dictionary<string, Texture2D> BackgroundResource;
+        public static Dictionary<string, Texture2D> BackgroundResourcePlay;
         public static Dictionary<string, Texture2D> TextureResource;
         public static Dictionary<string, SoundEffect> AudioResource;
         public static Dictionary<string, Song> MusicResource;
@@ -49,7 +49,7 @@ namespace DSAACA.Backgrounds
         #region Methods
         public void LoadContent(ContentManager content)
         {
-            BackgroundResource = Loader.ContentLoad<Texture2D>(content, "Assets\\Backgrounds");
+            BackgroundResourcePlay = Loader.ContentLoad<Texture2D>(content, "Assets\\Backgrounds\\Play");
             TextureResource = Loader.ContentLoad<Texture2D>(content, "Assets\\Sprites");
             AudioResource = Loader.ContentLoad<SoundEffect>(content, "Assets\\Sounds");
             MusicResource = Loader.ContentLoad<Song>(content, "Assets\\Music");
@@ -97,6 +97,7 @@ namespace DSAACA.Backgrounds
         {
             mainMenu = new SceneMenu(mainMenuTextures, pointerTextures, MusicResource["bgm_menu"], Keys.Enter);
             play = new ScenePlay(null, MusicResource["bgm_play"], Keys.Escape);
+            play.InitCamera(gameRoot);
             highScore = new SceneHighScore(highScoreTextures, MusicResource["bgm_highScore"], Keys.Escape);
 
             mainMenu.Active = true;
@@ -143,6 +144,7 @@ namespace DSAACA.Backgrounds
             MediaPlayer.Stop();
             Scenes.Push(pushScene);
             nextScene = Scenes.Peek();
+            nextScene.Active = true;
             MediaPlayer.Play(nextScene.BackingTrack);
         }
         #endregion
