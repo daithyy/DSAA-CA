@@ -94,10 +94,11 @@ namespace DSAACA.Backgrounds
 
         private void CreateScenes()
         {
-            mainMenu = new SceneMenu(mainMenuTextures, pointerTextures, MusicResource["bgm_menu"], Keys.Enter, Keys.Escape);
+            mainMenu = new SceneMenu(mainMenuTextures, pointerTextures, MusicResource["bgm_menu"], Keys.Enter, Keys.None);
             play = new ScenePlay(null, MusicResource["bgm_play"], Keys.None, Keys.Escape);
             play.InitCamera(gameRoot);
-            highScore = new SceneHighScore(highScoreTextures, MusicResource["bgm_highScore"], Keys.Enter, Keys.Escape);
+            highScore = new SceneHighScore(
+                highScoreTextures, pointerTextures, MusicResource["bgm_highScore"], Keys.None, Keys.Escape);
 
             mainMenu.Active = true;
             Scenes.Push(mainMenu);

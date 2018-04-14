@@ -83,11 +83,11 @@ namespace DSAACA.UI
 
             if (InputEngine.IsKeyPressed(Keys.S) ||
                 InputEngine.IsKeyPressed(Keys.Down)
-                && SlotPosition <= (MenuItem.Count - 1))
+                && SlotPosition <= (Slots.Count - 1))
             {
                 SceneManager.AudioResource["snd_cursor"].Play();
                 SlotPosition++;
-                if (SlotPosition == (MenuItem.Count))
+                if (SlotPosition == (Slots.Count))
                 {                    
                     SlotPosition = 0;
                 }
@@ -99,7 +99,7 @@ namespace DSAACA.UI
                 SceneManager.AudioResource["snd_cursor"].Play();
                 if (SlotPosition == 0)
                 {
-                    SlotPosition = MenuItem.Count;
+                    SlotPosition = Slots.Count;
                 }
                 SlotPosition--;
             }

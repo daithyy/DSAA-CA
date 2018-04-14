@@ -58,8 +58,8 @@ namespace DSAACA.Backgrounds.Levels
 
         private List<MenuItem> CreateMenuItems()
         {
-            int viewportCenterWidth = (Helper.GraphicsDevice.Viewport.Width / 2);
-            int viewportCenterHeight = (Helper.GraphicsDevice.Viewport.Height / 2);
+            int viewportCenterWidth = Helper.GraphicsDevice.Viewport.Width / 2;
+            int viewportCenterHeight = Helper.GraphicsDevice.Viewport.Height / 2;
 
             string play = "Play";
             string highScore = "High Scores";
@@ -67,17 +67,17 @@ namespace DSAACA.Backgrounds.Levels
 
             return new List<MenuItem>
             {
-                new MenuItem(play.ToUpper(), systemFont, Color.White,
+                new MenuItem(play.ToUpper(), 0, systemFont, Color.White,
                 new Vector2(viewportCenterWidth -
                 (systemFont.MeasureString(play).X / 2),
                 viewportCenterHeight
                 )),
-                new MenuItem(highScore.ToUpper(), systemFont, Color.White,
+                new MenuItem(highScore.ToUpper(), 0, systemFont, Color.White,
                 new Vector2(viewportCenterWidth -
                 (systemFont.MeasureString(highScore).X / 2),
                 viewportCenterHeight + SPACING
                 )),
-                new MenuItem(quit.ToUpper(), systemFont, Color.White,
+                new MenuItem(quit.ToUpper(), 0, systemFont, Color.White,
                 new Vector2(viewportCenterWidth -
                 (systemFont.MeasureString(quit).X / 2),
                 viewportCenterHeight + SPACING * 2

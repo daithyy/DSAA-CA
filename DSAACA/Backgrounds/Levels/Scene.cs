@@ -49,7 +49,7 @@ namespace DSAACA.Backgrounds
         public Keys EscapeKey;
         public float Alpha;
         private TimeSpan frameTime;
-        public const float FRAME_SPEED = 100;
+        public float FrameSpeed = 100;
         #endregion
 
         #region Constructor
@@ -83,7 +83,7 @@ namespace DSAACA.Backgrounds
             frameTime += gameTime.ElapsedGameTime;
 
             // If it's greater than the frame time then move to the next frame ...
-            if (frameTime.Milliseconds >= FRAME_SPEED)
+            if (frameTime.Milliseconds >= FrameSpeed)
             {
                 Texture = Textures.Dequeue();
                 Textures.Enqueue(Texture);

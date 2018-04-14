@@ -20,15 +20,17 @@ namespace DSAACA.UI
         public Color CurrentColor { get; set; }
         public Vector2 Position { get; set; }
         public string Name { get; set; }
+        public int Score { get; set; }
         public bool isClicked = false;
         public bool isVisible = true;
         #endregion
 
         #region Constructor
-        public MenuItem(string nameIn, SpriteFont UIFontIn, Color colorIn, Vector2 positionIn)
+        public MenuItem(string nameIn, int scoreIn, SpriteFont UIFontIn, Color colorIn, Vector2 positionIn)
         {
             Count++;
             Name = nameIn;
+            Score = scoreIn;
             CurrentColor = colorIn;
             Position = positionIn;
             UIFont = UIFontIn;
@@ -45,8 +47,16 @@ namespace DSAACA.UI
         {
             if (isVisible)
             {
-                spriteBatch.DrawString(UIFont, Name, Position + Camera.CamPos, CurrentColor);
+                if (Score == 0)
+                    spriteBatch.DrawString(UIFont, Name, Position + Camera.CamPos, CurrentColor);
+                else
+                    spriteBatch.DrawString(UIFont, ToString(), Position + Camera.CamPos, CurrentColor);
             }
+        }
+
+        public override string ToString()
+        {
+            return "Name: " + Name + " Score: " + Score.ToString();
         }
         #endregion
     }
