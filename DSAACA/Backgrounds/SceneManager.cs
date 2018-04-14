@@ -20,7 +20,7 @@ namespace DSAACA.Backgrounds
     {
         #region Properties
         public Stack<Scene> Scenes;
-        private Scene nextScene;
+        private Scene previousScene;
         private Scene currentScene;
         private SceneMenu mainMenu;
         private ScenePlay play;
@@ -142,13 +142,13 @@ namespace DSAACA.Backgrounds
 
         private void SwitchScene(Scene pushScene)
         {
-            currentScene = Scenes.Pop();
-            currentScene.Active = false;
+            previousScene = Scenes.Pop();
+            previousScene.Active = false;
             MediaPlayer.Stop();
             Scenes.Push(pushScene);
-            nextScene = Scenes.Peek();
-            nextScene.Active = true;
-            MediaPlayer.Play(nextScene.BackingTrack);
+            currentScene = Scenes.Peek();
+            currentScene.Active = true;
+            MediaPlayer.Play(currentScene.BackingTrack);
         }
 
         private void CheckScore(int gameScore)
