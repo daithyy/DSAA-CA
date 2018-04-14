@@ -26,9 +26,8 @@ namespace DSAACA.Backgrounds.Levels
         public SceneMenu(Queue<Texture2D> textures, Queue<Texture2D> pointerTextures, Song bgm, Keys activateKey, Keys escapeKey)
             : base(textures, bgm, activateKey, escapeKey)
         {
+            UserInterface = new MenuUI(pointerTextures, new List<MenuItem>(), activateKey);
             Init();
-
-            UserInterface = new MenuUI(pointerTextures, CreateMenuItems(), activateKey);
         }
 
         #endregion
@@ -50,9 +49,10 @@ namespace DSAACA.Backgrounds.Levels
             UserInterface.Draw(spriteBatch);
         }
 
-        private void Init()
+        public void Init()
         {
             systemFont = GameRoot.FontResource["systemFont"];
+            UserInterface.Slots.AddRange(CreateMenuItems());
             MediaPlayer.Play(BackingTrack);
         }
 

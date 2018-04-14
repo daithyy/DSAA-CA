@@ -10,12 +10,14 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using DSAACA.Components;
 using DSAACA.Entities;
+using System.Threading;
 
 namespace DSAACA.Backgrounds.Levels
 {
     class ScenePlay : Scene
     {
         #region Properties
+        public static int Count;
         private SpriteFont systemFont;
         private Texture2D backgroundTexture;
         private Vector2 playAreaSize
@@ -44,7 +46,8 @@ namespace DSAACA.Backgrounds.Levels
         #region Methods
         public override void Update(GameTime gameTime)
         {
-            Camera.Follow(player.CentrePosition, Helper.GraphicsDevice.Viewport, currentCamera.CameraSpeed);
+            if (currentCamera != null)
+                Camera.Follow(player.CentrePosition, Helper.GraphicsDevice.Viewport, currentCamera.CameraSpeed);
             player.Update(gameTime);
             player.UpdateAnimation(gameTime);
             ClampPlayer(playAreaSize);
@@ -70,6 +73,7 @@ namespace DSAACA.Backgrounds.Levels
 
         private void Init()
         {
+            Interlocked.Increment(ref Count);
             systemFont = GameRoot.FontResource["systemFont"];
             backgroundTexture = SceneManager.BackgroundResourcePlay["bg_ground"];
             player = new Player(SceneManager.TextureResource["player"], new Vector2(100, 100), 1);

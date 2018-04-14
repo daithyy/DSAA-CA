@@ -98,7 +98,7 @@ namespace DSAACA.Backgrounds
             play = new ScenePlay(null, MusicResource["bgm_play"], Keys.None, Keys.Escape);
             play.InitCamera(gameRoot);
             highScore = new SceneHighScore(
-                highScoreTextures, pointerTextures, MusicResource["bgm_highScore"], Keys.None, Keys.Escape);
+                highScoreTextures, pointerTextures, MusicResource["bgm_highScore"], Keys.Enter, Keys.None);
 
             mainMenu.Active = true;
             Scenes.Push(mainMenu);
@@ -107,7 +107,7 @@ namespace DSAACA.Backgrounds
         private string Listen()
         {
             return Scenes
-                .Where(s => s.GetType() == typeof(SceneMenu))
+                .Where(s => s is SceneMenu)
                 .Cast<SceneMenu>()
                 .Select(sm => sm.UserInterface)
                 .Select(ui => ui.Slots)
@@ -126,8 +126,16 @@ namespace DSAACA.Backgrounds
                     case "PLAY":
                         SwitchScene(play);
                         break;
+                    case "PLAY AGAIN":
+                        ResetPlay();
+                        SwitchScene(mainMenu);
+                        SwitchScene(play);
+                        break;
                     case "HIGH SCORES":
                         SwitchScene(highScore);
+                        break;
+                    case "BACK":
+                        SwitchScene(mainMenu);
                         break;
                     case "QUIT":
                         Game.Exit();
@@ -138,6 +146,7 @@ namespace DSAACA.Backgrounds
                 }
 
                 mainMenu.UserInterface.ResetSlotState();
+                highScore.UserInterface.ResetSlotState();
             }
         }
 
@@ -152,7 +161,8 @@ namespace DSAACA.Backgrounds
                 currentScene = Scenes.Peek();
                 currentScene.Active = true;
 
-                AudioResource["snd_cursorE"].Play();            
+                if (AudioResource["snd_cursorE"].CreateInstance().State != SoundState.Playing)
+                    AudioResource["snd_cursorE"].Play();
                 MediaPlayer.Play(currentScene.BackingTrack);
             }
         }
@@ -161,7 +171,7 @@ namespace DSAACA.Backgrounds
         {
             if (gameScore >= ScenePlay.MAX_SCORE)
             {
-                SwitchScene(highScore);
+                GameOver();
             }
         }
 
@@ -169,6 +179,25 @@ namespace DSAACA.Backgrounds
         {
             if (currentScene.EscapeScene())
                 SwitchScene(previousScene);
+        }
+
+        private void ResetPlay()
+        {
+            play = null;
+            play = new ScenePlay(null, MusicResource["bgm_play"], Keys.None, Keys.Escape);
+            play.InitCamera(gameRoot);
+            ScenePlay.Score = 0;
+        }
+
+        private void GameOver()
+        {
+            highScore.OrderedInsert(highScore.Scoreboard,
+                new MenuItem(
+                    "Player " + ScenePlay.Count, ScenePlay.Score, 
+                    GameRoot.FontResource["systemFont"], Color.White, new Vector2(0)));
+            ScenePlay.Score = 0;
+
+            SwitchScene(highScore);
         }
         #endregion
     }

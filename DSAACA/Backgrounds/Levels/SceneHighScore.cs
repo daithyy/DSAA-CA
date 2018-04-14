@@ -14,52 +14,46 @@ using DSAACA.Components;
 
 namespace DSAACA.Backgrounds.Levels
 {
-    class SceneHighScore : Scene
+    class SceneHighScore : SceneMenu
     {
         #region Properties
-        public MenuUI ScoreInterface;
-        public static LinkedList<MenuItem> Scoreboard = new LinkedList<MenuItem>();
+        public LinkedList<MenuItem> Scoreboard = new LinkedList<MenuItem>();
         private SpriteFont systemFont;
         #endregion
 
         #region Constructor
         public SceneHighScore(Queue<Texture2D> textures, Queue<Texture2D> pointerTextures, Song bgm, Keys activateKey, Keys escapeKey)
-            : base(textures, bgm, activateKey, escapeKey)
+            : base(textures, pointerTextures, bgm, activateKey, escapeKey)
         {
             Init();
-
-            ScoreInterface = new MenuUI(pointerTextures, Scoreboard.ToList(), activateKey);
         }
         #endregion
 
         #region Methods   
         public override void Update(GameTime gameTime)
         {
-            UpdateAnimation(gameTime);
-            ScoreInterface.Update(gameTime);
+            UserInterface.Slots = Scoreboard.ToList();
+            base.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, new Rectangle(Position.ToPoint() + Camera.CamPos.ToPoint(),
-                new Point(
-                    Helper.GraphicsDevice.Viewport.Bounds.Width,
-                    Helper.GraphicsDevice.Viewport.Bounds.Height)), Color.White);
-
             ShowScoreboard(spriteBatch);
-            ScoreInterface.Draw(spriteBatch);
+
+            base.Draw(spriteBatch);
         }
 
-        private void Init()
+        public new void Init()
         {
+            systemFont = GameRoot.FontResource["systemFont"];
+
             FrameSpeed = FrameSpeed / 2;
 
             int viewportCenterWidth = Helper.GraphicsDevice.Viewport.Width / 2;
             int viewportCenterHeight = Helper.GraphicsDevice.Viewport.Height / 2;
 
-            systemFont = GameRoot.FontResource["systemFont"];
-            OrderedInsert(Scoreboard, new MenuItem("Play", 0, systemFont, Color.White, new Vector2(viewportCenterWidth, viewportCenterHeight)));
-            OrderedInsert(Scoreboard, new MenuItem("Quit", 0, systemFont, Color.White, new Vector2(viewportCenterWidth, viewportCenterHeight)));
+            OrderedInsert(Scoreboard, new MenuItem("Play Again", 0, systemFont, Color.White, new Vector2(viewportCenterWidth, viewportCenterHeight)));
+            OrderedInsert(Scoreboard, new MenuItem("Back", 0, systemFont, Color.White, new Vector2(viewportCenterWidth, viewportCenterHeight)));
         }
 
         public void ShowScoreboard(SpriteBatch spriteBatch)
@@ -71,7 +65,7 @@ namespace DSAACA.Backgrounds.Levels
             // Get the center of the viewport
             Vector2 ScorePos = Helper.GraphicsDevice.Viewport.Bounds.Center.ToVector2();
             // Calculate the position of the Scoreboard allowing for the size and number of scores to be displayed
-            ScorePos -= new Vector2(scoreSize.X / 2, scoreSize.Y * Scoreboard.Count);
+            ScorePos -= new Vector2(scoreSize.X / 2, scoreSize.Y * Scoreboard.Count - Helper.GraphicsDevice.Viewport.Height / 4);
 
             foreach (var item in Scoreboard)
             {
@@ -83,7 +77,7 @@ namespace DSAACA.Backgrounds.Levels
         public void OrderedInsert(LinkedList<MenuItem> list, MenuItem newScore)
         {
             LinkedListNode<MenuItem> node = list.First;
-            while (node != null && node.Value.Score <= newScore.Score)
+            while (node != null && node.Value.Score >= newScore.Score)
             {
                 node = node.Next;
             }
