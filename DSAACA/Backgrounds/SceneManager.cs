@@ -27,6 +27,7 @@ namespace DSAACA.Backgrounds
         private SceneHighScore highScore;
         private Game gameRoot;
 
+        public static Dictionary<string, Texture2D> BackgroundResource;
         public static Dictionary<string, Texture2D> TextureResource;
         public static Dictionary<string, SoundEffect> AudioResource;
         public static Dictionary<string, Song> MusicResource;
@@ -48,6 +49,7 @@ namespace DSAACA.Backgrounds
         #region Methods
         public void LoadContent(ContentManager content)
         {
+            BackgroundResource = Loader.ContentLoad<Texture2D>(content, "Assets\\Backgrounds");
             TextureResource = Loader.ContentLoad<Texture2D>(content, "Assets\\Sprites");
             AudioResource = Loader.ContentLoad<SoundEffect>(content, "Assets\\Sounds");
             MusicResource = Loader.ContentLoad<Song>(content, "Assets\\Music");

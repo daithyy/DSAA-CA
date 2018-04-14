@@ -830,3 +830,15 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Backgrounds/HighScore/l0_bg20.png
 
+#begin Assets/Backgrounds/Play/bg_ground.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Backgrounds/Play/bg_ground.png
+
