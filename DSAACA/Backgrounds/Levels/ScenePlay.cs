@@ -20,7 +20,7 @@ namespace DSAACA.Backgrounds.Levels
         public static int Count;
         private SpriteFont systemFont;
         private Texture2D backgroundTexture;
-        private Vector2 playAreaSize
+        public static Vector2 WorldBounds
         {
             get
             {
@@ -33,7 +33,7 @@ namespace DSAACA.Backgrounds.Levels
 
         // Entities
         public Player player;
-        private const int TOWER_AMOUNT = 3;
+        private const int TOWER_AMOUNT = 1;
         private List<StartTower> towers;
         private const int COLLECTABLE_AMOUNT = 9;
         private List<Collectable> collectables;
@@ -55,7 +55,7 @@ namespace DSAACA.Backgrounds.Levels
 
             player.Update(gameTime);
             player.UpdateAnimation(gameTime);
-            ClampPlayer(playAreaSize);
+            ClampPlayer(WorldBounds);
 
             foreach (Collectable item in collectables)
             {
@@ -63,18 +63,21 @@ namespace DSAACA.Backgrounds.Levels
                 item.Update(gameTime, player);
             }
 
-            foreach (StartTower item in towers)
+            foreach (StartTower tower in towers)
             {
-                if (ObjectWithinViewport(item, Helper.GraphicsDevice.Viewport))
+                tower.Update(gameTime);
+
+                if (ObjectWithinViewport(tower, Helper.GraphicsDevice.Viewport)
+                    && ObjectWithinViewport(tower.DestinationTower, Helper.GraphicsDevice.Viewport))
                 {
-                    item.UpdateAnimation(gameTime);
+                    tower.StartQueue(gameTime);
                 }
             }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(backgroundTexture, new Rectangle(new Point(0), playAreaSize.ToPoint()), Color.White);
+            spriteBatch.Draw(backgroundTexture, new Rectangle(new Point(0), WorldBounds.ToPoint()), Color.White);
             player.Draw(spriteBatch);
 
             foreach (Collectable item in collectables)
@@ -87,6 +90,19 @@ namespace DSAACA.Backgrounds.Levels
                 if (ObjectWithinViewport(item, Helper.GraphicsDevice.Viewport))
                 {
                     item.Draw(spriteBatch);
+                }
+
+                if (ObjectWithinViewport(item.DestinationTower, Helper.GraphicsDevice.Viewport))
+                {
+                    item.DestinationTower.Draw(spriteBatch);
+                }
+
+                foreach (Enemy enemy in item.Enemies)
+                {
+                    if (ObjectWithinViewport(enemy, Helper.GraphicsDevice.Viewport))
+                    {
+                        enemy.Draw(spriteBatch);
+                    }
                 }
             }
 
@@ -117,7 +133,7 @@ namespace DSAACA.Backgrounds.Levels
 
         public void InitCamera(Game game)
         {
-            currentCamera = new Camera(game, new Vector2(0,0), playAreaSize);
+            currentCamera = new Camera(game, new Vector2(0,0), WorldBounds);
         }
 
         private Collectable CreateCollectable()
@@ -133,21 +149,21 @@ namespace DSAACA.Backgrounds.Levels
         {
             Texture2D texture = SceneManager.TextureResource["towerStart"];
 
-            int xPosition = Camera.Random.Next(texture.Width, (int)playAreaSize.X - texture.Width);
-            int yPosition = Camera.Random.Next(texture.Height, (int)playAreaSize.Y - texture.Height);
+            int xPosition = Camera.Random.Next(texture.Width, (int)WorldBounds.X - texture.Width);
+            int yPosition = Camera.Random.Next(texture.Height, (int)WorldBounds.Y - texture.Height);
 
             return new StartTower(texture, new Vector2(xPosition, yPosition), 1);
         }
 
-        private void ClampPlayer(Vector2 worldBounds)
+        private void ClampPlayer(Vector2 WorldBounds)
         {
             player.Position = Vector2.Clamp(
                 player.Position, 
                 Vector2.Zero, 
-                new Vector2(worldBounds.X - player.Bounds.Width, worldBounds.Y - player.Bounds.Height));
+                new Vector2(WorldBounds.X - player.Bounds.Width, WorldBounds.Y - player.Bounds.Height));
         }
 
-        private bool ObjectWithinViewport(Sprite item, Viewport viewport)
+        public static bool ObjectWithinViewport(Sprite item, Viewport viewport)
         {
             if (item.CentrePosition.X < (viewport.Width + Camera.CamPos.X) 
                 && item.CentrePosition.Y < (viewport.Height + Camera.CamPos.Y))

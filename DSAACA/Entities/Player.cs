@@ -13,10 +13,10 @@ namespace DSAACA.Entities
     class Player : Sprite
     {
         #region Properties
-        private Vector2 Velocity;
-        private Vector2 Acceleration;
-        private Vector2 Deceleration;
-        private Vector2 MaxVelocity;
+        public Vector2 Velocity;
+        public Vector2 Acceleration;
+        public Vector2 Deceleration;
+        private Vector2 maxVelocity;
         public Vector2 PreviousPosition;
         #endregion
 
@@ -29,11 +29,11 @@ namespace DSAACA.Entities
         #endregion
 
         #region Methods
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             PreviousPosition = Position;
             HandleMovement();
-            Velocity = Vector2.Clamp(Velocity, -MaxVelocity, MaxVelocity);
+            Velocity = Vector2.Clamp(Velocity, -maxVelocity, maxVelocity);
             Position += Velocity;
         }
 
@@ -43,12 +43,12 @@ namespace DSAACA.Entities
             const float DECCELERATION = 0.2f;
             const float ACCELERATION = 0.5f;
 
-            MaxVelocity = new Vector2(MAX_VELOCITY);
+            maxVelocity = new Vector2(MAX_VELOCITY);
             Acceleration = new Vector2(ACCELERATION);
             Deceleration = new Vector2(DECCELERATION);
         }
 
-        public void HandleMovement()
+        public virtual void HandleMovement()
         {
             switch (InputEngine.UsingKeyboard)
             {

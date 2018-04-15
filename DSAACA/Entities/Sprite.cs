@@ -100,7 +100,7 @@ namespace DSAACA.Entities
         }
 
         // Draw Method (Caller has a spritebatch ready and has already called SpriteBatch.Begin())
-        public void Draw(SpriteBatch sp)
+        public virtual void Draw(SpriteBatch sp)
         {
             if (IsActive)
                 sp.Draw(Image, Position, SourceRectangle, Tint);
