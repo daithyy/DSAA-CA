@@ -51,8 +51,11 @@
     <Compile Include="Components\InputEngine.cs" />
     <Compile Include="Components\Loader.cs" />
     <Compile Include="Entities\Collectables.cs" />
+    <Compile Include="Entities\EndTower.cs" />
+    <Compile Include="Entities\Enemy.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Entities\Sprite.cs" />
+    <Compile Include="Entities\StartTower.cs" />
     <Compile Include="GameRoot.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

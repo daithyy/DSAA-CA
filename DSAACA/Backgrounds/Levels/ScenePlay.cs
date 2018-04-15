@@ -28,11 +28,15 @@ namespace DSAACA.Backgrounds.Levels
             }
         }
         private Camera currentCamera;
-        public Player player;
-        private List<Collectable> collectables;
-        private const int COLLECTABLE_AMOUNT = 9;
         public const int MAX_SCORE = COLLECTABLE_AMOUNT * Collectable.SCORE_AMOUNT;
         public static int Score;
+
+        // Entities
+        public Player player;
+        private const int TOWER_AMOUNT = 3;
+        private List<StartTower> towers;
+        private const int COLLECTABLE_AMOUNT = 9;
+        private List<Collectable> collectables;
         #endregion
 
         #region Constructor
@@ -83,6 +87,8 @@ namespace DSAACA.Backgrounds.Levels
             {
                 collectables.Add(CreateCollectable());
             }
+
+
         }
 
         public void InitCamera(Game game)
@@ -97,6 +103,14 @@ namespace DSAACA.Backgrounds.Levels
             int yPosition = Camera.Random.Next(100, Helper.GraphicsDevice.Viewport.Bounds.Height - 100);
 
             return new Collectable(SceneManager.TextureResource["coin"], new Vector2(xPosition, yPosition), 10);
+        }
+
+        private StartTower CreateTower()
+        {
+            int xPosition = Camera.Random.Next(50, (int)playAreaSize.X - 50);
+            int yPosition = Camera.Random.Next(50, (int)playAreaSize.Y - 50);
+
+            return new StartTower(SceneManager.TextureResource["startTower"], new Vector2(xPosition, yPosition), 1);
         }
 
         private void ClampPlayer(Vector2 worldBounds)
