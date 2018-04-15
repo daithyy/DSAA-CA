@@ -79,10 +79,10 @@ namespace DSAACA.Entities
             var y = CentrePosition.Y + radius * Math.Sin(angle);
 
             if (x > ScenePlay.WorldBounds.X)
-                x -= ((ScenePlay.WorldBounds.X - x) - Image.Width);
+                x += ((ScenePlay.WorldBounds.X - x) - Image.Width);
 
             if (y > ScenePlay.WorldBounds.Y)
-                y -= ((ScenePlay.WorldBounds.Y - y) - Image.Height);
+                y += ((ScenePlay.WorldBounds.Y - y) - Image.Height);
 
             return new Vector2((float)x, (float)y);
         }
