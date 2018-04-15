@@ -52,13 +52,23 @@ namespace DSAACA.Backgrounds.Levels
         {
             if (currentCamera != null)
                 Camera.Follow(player.CentrePosition, Helper.GraphicsDevice.Viewport, currentCamera.CameraSpeed);
+
             player.Update(gameTime);
             player.UpdateAnimation(gameTime);
             ClampPlayer(playAreaSize);
+
             foreach (Collectable item in collectables)
             {
                 item.UpdateAnimation(gameTime);
                 item.Update(gameTime, player);
+            }
+
+            foreach (StartTower item in towers)
+            {
+                if (ObjectWithinViewport(item, Helper.GraphicsDevice.Viewport))
+                {
+                    item.UpdateAnimation(gameTime);
+                }
             }
         }
 
@@ -66,10 +76,20 @@ namespace DSAACA.Backgrounds.Levels
         {
             spriteBatch.Draw(backgroundTexture, new Rectangle(new Point(0), playAreaSize.ToPoint()), Color.White);
             player.Draw(spriteBatch);
+
             foreach (Collectable item in collectables)
             {
                 item.Draw(spriteBatch);
             }
+
+            foreach (StartTower item in towers)
+            {
+                if (ObjectWithinViewport(item, Helper.GraphicsDevice.Viewport))
+                {
+                    item.Draw(spriteBatch);
+                }
+            }
+
             spriteBatch.DrawString(systemFont, "SCORE: " + Score,
                 new Vector2((Helper.GraphicsDevice.Viewport.Width / 2) -
                 (systemFont.MeasureString("SCORE: " + Score.ToString()).X / 2), 32) + Camera.CamPos, Color.White);
@@ -82,13 +102,17 @@ namespace DSAACA.Backgrounds.Levels
             backgroundTexture = SceneManager.BackgroundResourcePlay["bg_ground"];
             player = new Player(SceneManager.TextureResource["player"], new Vector2(100, 100), 1);
             collectables = new List<Collectable>();
+            towers = new List<StartTower>();
 
             for (int i = 0; i < COLLECTABLE_AMOUNT; i++)
             {
                 collectables.Add(CreateCollectable());
             }
 
-
+            for (int i = 0; i < TOWER_AMOUNT; i++)
+            {
+                towers.Add(CreateTower());
+            }
         }
 
         public void InitCamera(Game game)
@@ -107,10 +131,12 @@ namespace DSAACA.Backgrounds.Levels
 
         private StartTower CreateTower()
         {
-            int xPosition = Camera.Random.Next(50, (int)playAreaSize.X - 50);
-            int yPosition = Camera.Random.Next(50, (int)playAreaSize.Y - 50);
+            Texture2D texture = SceneManager.TextureResource["towerStart"];
 
-            return new StartTower(SceneManager.TextureResource["startTower"], new Vector2(xPosition, yPosition), 1);
+            int xPosition = Camera.Random.Next(texture.Width, (int)playAreaSize.X - texture.Width);
+            int yPosition = Camera.Random.Next(texture.Height, (int)playAreaSize.Y - texture.Height);
+
+            return new StartTower(texture, new Vector2(xPosition, yPosition), 1);
         }
 
         private void ClampPlayer(Vector2 worldBounds)
@@ -119,6 +145,15 @@ namespace DSAACA.Backgrounds.Levels
                 player.Position, 
                 Vector2.Zero, 
                 new Vector2(worldBounds.X - player.Bounds.Width, worldBounds.Y - player.Bounds.Height));
+        }
+
+        private bool ObjectWithinViewport(Sprite item, Viewport viewport)
+        {
+            if (item.CentrePosition.X < (viewport.Width + Camera.CamPos.X) 
+                && item.CentrePosition.Y < (viewport.Height + Camera.CamPos.Y))
+                return true;
+            else
+                return false;
         }
         #endregion
     }
