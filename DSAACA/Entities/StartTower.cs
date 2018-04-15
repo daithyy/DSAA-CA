@@ -30,12 +30,22 @@ namespace DSAACA.Entities
         #endregion
 
         #region Methods
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, List<Enemy> activeEnemies)
         {
             if (ScenePlay.ObjectWithinViewport(DestinationTower, Helper.GraphicsDevice.Viewport))
             {
                 DestinationTower.UpdateAnimation(gameTime);
             }
+
+            foreach (Enemy enemy in activeEnemies)
+            {
+                if (enemy.RequeueCheck())
+                {
+                    Enemies.Enqueue(CreateEnemy());
+                }
+            }
+
+            activeEnemies.RemoveAll(enemy => enemy.RequeueCheck() == true);
 
             foreach (Enemy enemy in Enemies)
             {
@@ -68,7 +78,7 @@ namespace DSAACA.Entities
 
         private Enemy CreateEnemy()
         {
-            return new Enemy(SceneManager.TextureResource["blackKnight"], CentrePosition, DestinationTower.CentrePosition, 1);
+            return new Enemy(SceneManager.TextureResource["blackKnight"], CentrePosition, this, DestinationTower, 1);
         }
 
         private Vector2 CalculateEndTowerPosition(double radius)
@@ -87,16 +97,22 @@ namespace DSAACA.Entities
                return new Vector2((float)x, (float)y);
         }
 
-        public void StartQueue(GameTime gameTime)
+        public void StartQueue(GameTime gameTime, List<Enemy> activeList)
         {
             DequeueInterval += gameTime.ElapsedGameTime;
 
             if (DequeueInterval.Seconds >= 1 && Enemies.Count >= 1)
             {
                 Enemy enemy = Enemies.Dequeue();
+                activeList.Add(enemy);
                 enemy.CanMove = true;
                 DequeueInterval = TimeSpan.Zero;
             }
+        }
+
+        public void Requeue(Enemy enemy)
+        {
+            Enemies.Enqueue(enemy);
         }
         #endregion
     }

@@ -33,10 +33,11 @@ namespace DSAACA.Backgrounds.Levels
 
         // Entities
         public Player player;
-        private const int TOWER_AMOUNT = 1;
+        private const int TOWER_AMOUNT = 5;
         private List<StartTower> towers;
         private const int COLLECTABLE_AMOUNT = 9;
         private List<Collectable> collectables;
+        private List<Enemy> activeEnemies;
         #endregion
 
         #region Constructor
@@ -65,13 +66,18 @@ namespace DSAACA.Backgrounds.Levels
 
             foreach (StartTower tower in towers)
             {
-                tower.Update(gameTime);
+                tower.Update(gameTime, activeEnemies);
 
                 if (ObjectWithinViewport(tower, Helper.GraphicsDevice.Viewport)
                     && ObjectWithinViewport(tower.DestinationTower, Helper.GraphicsDevice.Viewport))
                 {
-                    tower.StartQueue(gameTime);
+                    tower.StartQueue(gameTime, activeEnemies);
                 }
+            }
+
+            foreach (Enemy enemy in activeEnemies)
+            {
+                enemy.Update(gameTime);
             }
         }
 
@@ -96,13 +102,13 @@ namespace DSAACA.Backgrounds.Levels
                 {
                     item.DestinationTower.Draw(spriteBatch);
                 }
+            }
 
-                foreach (Enemy enemy in item.Enemies)
+            foreach (Enemy enemy in activeEnemies)
+            {
+                if (ObjectWithinViewport(enemy, Helper.GraphicsDevice.Viewport))
                 {
-                    if (ObjectWithinViewport(enemy, Helper.GraphicsDevice.Viewport))
-                    {
-                        enemy.Draw(spriteBatch);
-                    }
+                    enemy.Draw(spriteBatch);
                 }
             }
 
@@ -119,6 +125,7 @@ namespace DSAACA.Backgrounds.Levels
             player = new Player(SceneManager.TextureResource["player"], new Vector2(100, 100), 1);
             collectables = new List<Collectable>();
             towers = new List<StartTower>();
+            activeEnemies = new List<Enemy>();
 
             for (int i = 0; i < COLLECTABLE_AMOUNT; i++)
             {

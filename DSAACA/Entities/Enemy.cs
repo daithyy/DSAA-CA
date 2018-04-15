@@ -11,16 +11,22 @@ namespace DSAACA.Entities
     class Enemy : Player
     {
         #region Properties
-        private Vector2 destination;
+        private StartTower start;
+        private EndTower destination;
+        private Vector2 direction;
         public bool CanMove;
         #endregion
 
         #region Constructor
-        public Enemy(Texture2D image, Vector2 position, Vector2 destination, int frameCount)
+        public Enemy(Texture2D image, Vector2 position, StartTower start, EndTower destination, int frameCount)
             : base(image, position, frameCount)
         {
+            this.start = start;
             this.destination = destination;
             CanMove = false;
+
+            direction = destination.Position - position;
+            direction.Normalize();
         }
         #endregion
 
@@ -33,16 +39,28 @@ namespace DSAACA.Entities
 
         public override void HandleMovement()
         {
-            if (destination != null 
-                && Position != destination
+            if (destination != null
+                && Position != destination.Position
                 && CanMove)
             {
-                Velocity += Acceleration;
+                Position += direction;
             }
             else
             {
-                Velocity -= Deceleration;
+                //if (Velocity != Vector2.Zero)
+                //    Velocity -= Deceleration;
+                CanMove = false;
             }
+        }
+
+        public bool RequeueCheck()
+        {
+            if (CheckCollision(destination))
+            {
+                return true;
+            }
+            else
+                return false;
         }
         #endregion
     }
