@@ -133,7 +133,7 @@ namespace DSAACA.Backgrounds.Levels
 
         public void InitCamera(Game game)
         {
-            currentCamera = new Camera(game, new Vector2(0,0), WorldBounds);
+            currentCamera = new Camera(game, Vector2.Zero, WorldBounds);
         }
 
         private Collectable CreateCollectable()

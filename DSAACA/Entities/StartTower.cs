@@ -78,13 +78,13 @@ namespace DSAACA.Entities
             var x = CentrePosition.X + radius * Math.Cos(angle);
             var y = CentrePosition.Y + radius * Math.Sin(angle);
 
-            if (x > ScenePlay.WorldBounds.X)
+            if (x > ScenePlay.WorldBounds.X - Image.Width)
                 x += ((ScenePlay.WorldBounds.X - x) - Image.Width);
 
-            if (y > ScenePlay.WorldBounds.Y)
+            if (y > ScenePlay.WorldBounds.Y - Image.Width)
                 y += ((ScenePlay.WorldBounds.Y - y) - Image.Height);
 
-            return new Vector2((float)x, (float)y);
+               return new Vector2((float)x, (float)y);
         }
 
         public void StartQueue(GameTime gameTime)
