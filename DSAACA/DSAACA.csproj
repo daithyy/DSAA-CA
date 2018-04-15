@@ -45,7 +45,6 @@
     <Compile Include="Backgrounds\Levels\SceneMenu.cs" />
     <Compile Include="Backgrounds\Levels\ScenePlay.cs" />
     <Compile Include="Backgrounds\SceneManager.cs" />
-    <Compile Include="Components\AudioManager.cs" />
     <Compile Include="Components\Camera.cs" />
     <Compile Include="Components\Helpers.cs" />
     <Compile Include="Components\InputEngine.cs" />

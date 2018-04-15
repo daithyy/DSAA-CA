@@ -101,6 +101,7 @@ namespace DSAACA.Backgrounds
                 highScoreTextures, pointerTextures, MusicResource["bgm_highScore"], Keys.Enter, Keys.None);
 
             mainMenu.Active = true;
+            MediaPlayer.Play(mainMenu.BackingTrack);
             Scenes.Push(mainMenu);
         }
 

@@ -53,7 +53,6 @@ namespace DSAACA.Backgrounds.Levels
         {
             systemFont = GameRoot.FontResource["systemFont"];
             UserInterface.Slots.AddRange(CreateMenuItems());
-            MediaPlayer.Play(BackingTrack);
         }
 
         private List<MenuItem> CreateMenuItems()
